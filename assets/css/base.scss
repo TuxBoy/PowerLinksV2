@@ -1,0 +1,16 @@
+:root {
+  --dark_color: #292D3E;
+  --blue: #1C3A40;
+  --red: #D24335;
+  --green: #B2E097;
+}
+
+.container {
+  padding-top: 75px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: var(--blue);
+  border-color: var(--blue);
+}

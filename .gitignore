@@ -6,5 +6,13 @@
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
+/.idea
 /vendor/
 ###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/assets/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
