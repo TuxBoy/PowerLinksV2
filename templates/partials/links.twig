@@ -1,14 +1,17 @@
 <div class="row">
     {% for link in links %}
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm">
+            <div class="card mb-4 shadow-sm {{ link.seen ? 'seen' : '' }}">
+                {% if link.seen %}
+                    <span class="badge badge-pill badge-success link__seen__badge">Vu</span>
+                {% endif %}
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
                 <div class="card-body">
                     <p class="card-text">{{ link.name }}</p>
                     <p class="description">{{  link.description }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{{ link.url }}" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="{{ path('link.seen', {'id': link.id}) }}" class="btn btn-sm btn-outline-secondary">View</a>
 
                             {% if app.user and app.user.id == link.user.id or is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('link.edit', {id: link.id}) }}" title="Editer le lien" class="btn btn-sm btn-outline-secondary">Edit</a>

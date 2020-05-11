@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -67,6 +66,7 @@ class LinkController extends AbstractController
 		$form = $this->createForm(LinkType::class, $link);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
+			$link->setUpdatedAt(new DateTime());
 			$entityManager->persist($link);
 			$entityManager->flush();
 
@@ -90,6 +90,25 @@ class LinkController extends AbstractController
 		$entityManager->remove($linkRepository->findOrFail($id));
 		$entityManager->flush();
 		return $this->redirectToHome('Votre lien a bien été supprimé.');
+    }
+
+	/**
+	 * @Route("/link/seen/{id}", name="link.seen", methods={"GET"})
+	 *
+	 * @param int $id
+	 * @param LinkRepository $linkRepository
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 * @throws EntityNotFoundException
+	 */
+	public function seen(int $id, LinkRepository $linkRepository, EntityManagerInterface $entityManager): Response
+	{
+		$link = $linkRepository->findOrFail($id);
+		$link->setSeen(true);
+		$entityManager->persist($link);
+		$entityManager->flush();
+
+		return $this->redirect($link->getUrl());
     }
 
 	/**

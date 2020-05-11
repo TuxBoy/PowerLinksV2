@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Link;
+use App\Form\SearchForm;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,12 +22,13 @@ class LinkRepository extends ServiceEntityRepository
         parent::__construct($registry, Link::class);
     }
 
-	public function findAllLinks()
+	public function findAllLinks(SearchData $search)
 	{
-		return $this->createQueryBuilder('l')
-			->orderBy('l.created_at', 'DESC')
-			->getQuery()
-			->getResult();
+		$query = $this->createQueryBuilder('l')
+			->where('l.seen = :seen')
+			->setParameter('seen', $search->seen)
+			->orderBy('l.created_at', $search->getOrderBy());
+		return $query->getQuery()->getResult();
     }
 
 	public function findOrFail(int $id): Link

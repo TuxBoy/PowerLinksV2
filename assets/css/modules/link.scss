@@ -2,3 +2,13 @@
   display: block;
   text-align: right;
 }
+
+.seen {
+  opacity: .8;
+}
+
+.link__seen__badge {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}

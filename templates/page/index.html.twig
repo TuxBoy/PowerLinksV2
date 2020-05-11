@@ -15,6 +15,11 @@
             <button type="submit" class="btn btn-primary">Ajouter</button>
         {{ form_end(form) }}
     {% endif %}
+
+    {{ form_start(filterForm) }}
+        {{ form_widget(filterForm) }}
+        <button type="submit" class="btn btn-primary">Filter</button>
+    {{ form_end(filterForm) }}
     <h2 class="border-bottom border-gray pb-2 mb-0">Les derniers liens ajoutés</h2>
 
     {% include 'partials/links.twig' with {'links': links} only %}
