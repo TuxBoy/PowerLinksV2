@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Link;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -27,32 +28,13 @@ class LinkRepository extends ServiceEntityRepository
 			->getResult();
     }
 
-    // /**
-    //  * @return Link[] Returns an array of Link objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+	public function findOrFail(int $id): Link
+	{
+		$link = $this->find($id);
+		if (null === $link) {
+			throw new EntityNotFoundException('Aucun résultat de trouvé pour cet identifiant');
+		}
 
-    /*
-    public function findOneBySomeField($value): ?Link
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+		return $link;
     }
-    */
 }

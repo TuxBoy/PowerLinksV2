@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer un lien{% endblock %}
+
+{% block body %}
+
+    <h1>Edition du lien {{ link.name }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Valider</button>
+    {{ form_end(form) }}
+
+{% endblock %}

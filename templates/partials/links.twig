@@ -10,10 +10,13 @@
                         <div class="btn-group">
                             <a href="{{ link.url }}" class="btn btn-sm btn-outline-secondary">View</a>
 
-                            <a href="" title="Editer le lien" class="btn btn-sm btn-outline-secondary">Edit</a>
-                            <form action="?_method=DELETE" method="post">
-                                <button type="submit" title="Supprimer le lien" class="btn btn-sm btn-outline-danger">X</button>
-                            </form>
+                            {% if app.user and app.user.id == link.user.id or is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('link.edit', {id: link.id}) }}" title="Editer le lien" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <form action="{{ path('link.delete', {id: link.id}) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" title="Supprimer le lien" class="btn btn-sm btn-outline-danger">X</button>
+                                </form>
+                            {% endif %}
                         </div>
                         <small class="text-muted">9 mins</small>
                         <small class="text-muted">{{ link.user.username }}</small>
