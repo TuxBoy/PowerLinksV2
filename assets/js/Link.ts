@@ -1,26 +1,32 @@
 import { post } from "./utils/api";
 
+interface OptionsForm {
+    withShortcut?: Boolean,
+    keyCode?: String
+}
+
 class Link {
 
     private element: Element
-    private addFormLink: HTMLInputElement | null;
+    private form: Element
     private urlInput: any | null;
+    private options: OptionsForm;
 
-    constructor(element: Element) {
+    constructor(element: Element, form: Element, options?: OptionsForm) {
         this.element     = element
-        this.addFormLink = document.querySelector('#addFormLink')
-        this.urlInput    = document.querySelector('#addFormLink #urlInput')
+        this.form        = form;
+        this.options     = Object.assign({withShortcut: true, keyCode: 't'}, options || {});
     }
 
     public showFormWithKey (event: KeyboardEvent) {
-        if (this.addFormLink === null) return
-        if (event.key === 't' && this.addFormLink.classList.contains('hide')) {
+        if (this.form === null) return
+        if (event.key === this.options.keyCode && this.form.classList.contains('hide')) {
             event.preventDefault()
-            this.addFormLink.classList.toggle('hide')
+            this.form.classList.toggle('hide')
             if (! this.urlInput) return;
             this.urlInput.focus()
         } else if (event.key === 'Escape') {
-            this.addFormLink.classList.toggle('hide')
+            this.form.classList.toggle('hide')
         }
     }
 
@@ -28,15 +34,13 @@ class Link {
         if (this.element) {
             this.element.addEventListener('click', (event: Event) => {
                 event.preventDefault()
-                if (! this.addFormLink) return
-                this.addFormLink.classList.toggle('hide')
+                if (! this.form) return
+                this.form.classList.toggle('hide')
             });
-            document.addEventListener('keydown', this.showFormWithKey.bind(this))
+            if (this.options.withShortcut) {
+                document.addEventListener('keydown', this.showFormWithKey.bind(this))
+            }
         }
-    }
-
-    public change () {
-
     }
 
 }

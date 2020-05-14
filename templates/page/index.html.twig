@@ -9,16 +9,25 @@
                 id="showFormAddLink" href="#" title="Cliquez ici ou sur la touche 't' pour afficher le formulaire puis 'Echap' pour le fermer">
             Ajouter un lien
         </a>
+        <a
+                class="btn btn-success border-bottom pb-2 mt-2 mb-3"
+                id="showFormFilterButton" href="#" title="Afficher le formulaire du filtre">
+            Filter
+        </a>
 
-        {{ form_start(form, {attr: {class: 'form addFormLink hide', id: 'addFormLink'}}) }}
+        <meta-link>
+            {{ form_start(form, {attr: {class: 'form addFormLink hide', id: 'addFormLink'}}) }}
             {{ form_widget(form) }}
             <button type="submit" class="btn btn-primary">Ajouter</button>
-        {{ form_end(form) }}
+            {{ form_end(form) }}
+        </meta-link>
     {% endif %}
 
-    {{ form_start(filterForm) }}
+    {{ form_start(filterForm, {attr: {class: 'showFormFilter hide', id: 'formFilter'}}) }}
+        <h3>Filter par</h3>
         {{ form_widget(filterForm) }}
-        <button type="submit" class="btn btn-primary">Filter</button>
+        <button type="submit" class="btn btn-primary">Appliquer</button>
+         <a href="{{ path('root') }}" title="Rénitialiser le filtre">Reset</a>
     {{ form_end(filterForm) }}
     <h2 class="border-bottom border-gray pb-2 mb-0">Les derniers liens ajoutés</h2>
 

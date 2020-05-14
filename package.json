@@ -16,8 +16,5 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
-    },
-    "dependencies": {
-        "metadata-parser": "^1.0.1"
     }
 }

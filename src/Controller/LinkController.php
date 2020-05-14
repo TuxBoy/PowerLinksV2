@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Link;
-use App\Form\LinkType;
+use App\Form\LinkForm;
 use App\Repository\LinkRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,7 +34,7 @@ class LinkController extends AbstractController
 	 */
 	public function save(Request $request, EntityManagerInterface $entityManager)
 	{
-		$form = $this->createForm(LinkType::class, new Link);
+		$form = $this->createForm(LinkForm::class, new Link);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
 			/** @var $link Link */
@@ -63,7 +63,7 @@ class LinkController extends AbstractController
 	public function edit(int $id, Request $request, EntityManagerInterface $entityManager, LinkRepository $linkRepository)
 	{
 		$link = $linkRepository->findOrFail($id);
-		$form = $this->createForm(LinkType::class, $link);
+		$form = $this->createForm(LinkForm::class, $link);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
 			$link->setUpdatedAt(new DateTime());

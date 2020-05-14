@@ -4,19 +4,32 @@ declare(strict_types=1);
 
 namespace App\Data;
 
+use App\Entity\User;
+
 class SearchData
 {
 
-	public string $order_by = 'asc';
+	public string $orderBy = 'desc';
 
-	public bool $seen = false;
+	public ?bool $seen = null;
+
+	public ?User $user = null;
+
+	public bool $onlyUser = false;
+
+	public ?string $search = null;
+
+	public function __construct(?User $user)
+	{
+		$this->user = $user;
+	}
 
 	/**
 	 * @return string
 	 */
 	public function getOrderBy(): string
 	{
-		return strtoupper($this->order_by);
+		return strtoupper($this->orderBy);
 	}
 
 }

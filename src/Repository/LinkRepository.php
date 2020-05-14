@@ -24,10 +24,29 @@ class LinkRepository extends ServiceEntityRepository
 
 	public function findAllLinks(SearchData $search)
 	{
-		$query = $this->createQueryBuilder('l')
-			->where('l.seen = :seen')
-			->setParameter('seen', $search->seen)
-			->orderBy('l.created_at', $search->getOrderBy());
+		$query = $this
+			->createQueryBuilder('l')
+			->select('l', 'u')
+			->join('l.user', 'u');
+
+		if (null !== $search->seen) {
+			$query->where('l.seen = :seen')
+				->setParameter('seen', $search->seen);
+		}
+
+		if (!empty($search->search)) {
+			$query
+				->andWhere('l.name LIKE :name')
+				->setParameter('name', "%{$search->search}%");
+		}
+
+		if (true === $search->onlyUser) {
+			$query
+				->andWhere('l.user = :user')
+				->setParameter('user', $search->user->getId());
+		}
+		$query->orderBy('l.created_at', $search->getOrderBy());
+
 		return $query->getQuery()->getResult();
     }
 

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\Link;
-use App\Form\LinkType;
+use App\Form\LinkForm;
 use App\Form\SearchForm;
 use App\Repository\LinkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +23,10 @@ class PageController extends AbstractController
 	 */
     public function index(Request $request, LinkRepository $linkRepository): Response
     {
-    	$data = new SearchData();
+    	$data = new SearchData($this->getUser());
     	$filterForm = $this->createForm(SearchForm::class, $data);
     	$filterForm->handleRequest($request);
-	    $form = $this->createForm(LinkType::class, new Link);
+	    $form = $this->createForm(LinkForm::class, new Link);
     	$links = $linkRepository->findAllLinks($data);
         return $this->render('page/index.html.twig', [
         	'links'      => $links,
