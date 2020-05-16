@@ -36,8 +36,8 @@ class LinkRepository extends ServiceEntityRepository
 
 		if (!empty($search->search)) {
 			$query
-				->andWhere('l.name LIKE :name')
-				->setParameter('name', "%{$search->search}%");
+				->andWhere('l.description LIKE :description')
+				->setParameter('description', "%{$search->search}%");
 		}
 
 		if (true === $search->onlyUser) {

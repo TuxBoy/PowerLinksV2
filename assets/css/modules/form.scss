@@ -1,7 +1,6 @@
 .addFormLink, .showFormFilter {
   display: block;
   opacity: 1;
-  height: 245px;
   transition: height .3s;
   &.hide {
     display: none;

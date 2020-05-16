@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Link;
 use App\Form\LinkForm;
 use App\Repository\LinkRepository;
+use App\Service\MetadataService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +24,24 @@ class LinkController extends AbstractController
     public function index(): Response
     {
         return $this->render('link/index.html.twig');
+    }
+
+	/**
+	 * @Route("/link/metadata", name="link.metadata", methods={"POST"})
+	 *
+	 * @param Request $request
+	 * @return Response
+	 */
+	public function sendMetadata(Request $request): Response
+	{
+		$content  = json_decode($request->getContent(), true);
+		$metadata = new MetadataService(file_get_contents($content['url']));
+
+		return new JsonResponse([
+			'title'       => $metadata->getTitle(),
+			'description' => $metadata->getDescription(),
+			'image'       => $metadata->getImage()
+		]);
     }
 
 	/**
@@ -41,6 +61,7 @@ class LinkController extends AbstractController
 			$link = $form->getData();
 			$link
 				->setUser($this->getUser())
+				->setName('')
 				->setCreatedAt(new DateTime())
 				->setUpdatedAt(new DateTime());
 			$entityManager->persist($link);

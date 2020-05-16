@@ -1,15 +1,33 @@
-// @ts-ignore
-import scrape from 'html-metadata'
+import { post } from "../utils/api";
+
 
 export default class MetaLink extends HTMLElement {
 
-    public connectedCallback () {
+    public constructor () {
+        super();
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    private async getMetadata (url: String) {
-        const result = await scrape(url)
-        console.log(result)
-        const { title, description, image } = result.openGraph
+    public connectedCallback () {
+        const urlField = this.querySelector('.urlField')
+        if  (urlField !== null) {
+            urlField.addEventListener('change', this.handleChange)
+        }
+    }
+
+    private async handleChange (event: any) {
+        const url    = event.target.value
+        const result = await post('/link/metadata', { url })
+        const description = this.querySelector('.description')
+        if (description) {
+            // @ts-ignore
+            description.value = result.description
+        }
+        const image = this.querySelector('.image')
+        if (image) {
+            // @ts-ignore
+            image.value = result.image
+        }
     }
 
 }

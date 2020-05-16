@@ -13,9 +13,9 @@ class Link {
     private options: OptionsForm;
 
     constructor(element: Element, form: Element, options?: OptionsForm) {
-        this.element     = element
-        this.form        = form;
-        this.options     = Object.assign({withShortcut: true, keyCode: 't'}, options || {});
+        this.element = element
+        this.form    = form;
+        this.options = Object.assign({withShortcut: true, keyCode: 't'}, options || {});
     }
 
     public showFormWithKey (event: KeyboardEvent) {
