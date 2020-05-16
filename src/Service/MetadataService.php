@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Service;
 
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\HttpFoundation\Request;
 
 class MetadataService
 {
-
-	private ?string $title;
 
 	private Crawler $crawler;
 
