@@ -61,7 +61,6 @@ class LinkController extends AbstractController
 			$link = $form->getData();
 			$link
 				->setUser($this->getUser())
-				->setName('')
 				->setCreatedAt(new DateTime())
 				->setUpdatedAt(new DateTime());
 			$entityManager->persist($link);

@@ -28,6 +28,11 @@ export default class MetaLink extends HTMLElement {
             // @ts-ignore
             image.value = result.image
         }
+        const title = this.querySelector('.title')
+        if (title) {
+            // @ts-ignore
+            title.value = result.title
+        }
     }
 
 }
