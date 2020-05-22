@@ -26,7 +26,7 @@ class LinkForm extends AbstractType
         ;
 
         if ($link && null !== $link->getId()) {
-        	$builder->add('seen', CheckboxType::class, ['label' => 'Marquer comme vu']);
+        	$builder->add('seen', CheckboxType::class, ['label' => 'Marquer comme vu', 'data' => false, 'required' => false]);
         }
     }
 

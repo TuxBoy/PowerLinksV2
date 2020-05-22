@@ -12,13 +12,12 @@
                 {% endif %}
                 <div class="card-body">
                     <p class="card-text">{{ link.name }}</p>
-                    <p class="description">{{  link.description }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <a href="{{ path('link.seen', {'id': link.id}) }}" class="btn btn-sm btn-outline-secondary">View</a>
+                            <a href="{{ path('link.seen', {'id': link.id}) }}" class="btn btn-sm btn-outline-secondary">Visiter</a>
 
                             {% if app.user and app.user.id == link.user.id or is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('link.edit', {id: link.id}) }}" title="Editer le lien" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a href="{{ path('link.edit', {id: link.id}) }}" title="Editer le lien" class="btn btn-sm btn-outline-secondary">Editer</a>
                                 <form action="{{ path('link.delete', {id: link.id}) }}" method="post">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" title="Supprimer le lien" class="btn btn-sm btn-outline-danger">X</button>

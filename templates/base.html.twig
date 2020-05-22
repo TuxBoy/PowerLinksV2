@@ -16,13 +16,15 @@
 <body>
 
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
-    <a class="navbar-brand mr-auto mr-lg-0" href="{{ path('root') }}">Power links</a>
+    <a class="navbar-brand" href="{{ path('root') }}">Power links</a>
     <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="{{ path('link.index') }}" title="Voir la liste complète des liens" class="nav-link">Liens</a>
+            </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             {% if app.user %}
