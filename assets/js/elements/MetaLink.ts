@@ -1,6 +1,5 @@
 import { post } from "../utils/api";
 
-
 export default class MetaLink extends HTMLElement {
 
     public constructor () {
@@ -17,22 +16,22 @@ export default class MetaLink extends HTMLElement {
 
     private async handleChange (event: any) {
         const url    = event.target.value
-        const result = await post('/link/metadata', { url })
-        const description = this.querySelector('.description')
-        if (description) {
-            // @ts-ignore
-            description.value = result.description
+        const result = await post('/api/link/metadata', { url })
+
+        this.setFormElement('description', result.description)
+        this.setFormElement('image', result.image)
+        this.setFormElement('title', result.title)
+        this.setFormElement('link_tags', result.tags)
+    }
+
+    private setFormElement(selector: String, value: any): void {
+        const element = this.querySelector(`.${selector}`)
+        if (element === null) {
+            return;
         }
-        const image = this.querySelector('.image')
-        if (image) {
-            // @ts-ignore
-            image.value = result.image
-        }
-        const title = this.querySelector('.title')
-        if (title) {
-            // @ts-ignore
-            title.value = result.title
-        }
+
+        // @ts-ignore
+        element.value = value
     }
 
 }

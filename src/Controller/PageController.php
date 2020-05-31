@@ -14,20 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
+
+	private const MAX_LINK_PER_PAGE = 10;
+
 	/**
 	 * @Route("/", name="root")
 	 *
 	 * @param Request $request
 	 * @param LinkRepository $linkRepository
+	 * @param SearchData $data
 	 * @return Response
 	 */
-    public function index(Request $request, LinkRepository $linkRepository): Response
+    public function index(Request $request, LinkRepository $linkRepository, SearchData $data): Response
     {
-    	$data = new SearchData($this->getUser());
     	$filterForm = $this->createForm(SearchForm::class, $data);
     	$filterForm->handleRequest($request);
-	    $form = $this->createForm(LinkForm::class, new Link);
-    	$links = $linkRepository->findAllLinks($data);
+
+	    $form  = $this->createForm(LinkForm::class, new Link);
+    	$links = $linkRepository->findAllLinks($data, self::MAX_LINK_PER_PAGE);
         return $this->render('page/index.html.twig', [
         	'links'      => $links,
 	        'filterForm' => $filterForm->createView(),

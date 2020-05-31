@@ -14,31 +14,6 @@
         Tous les liens
     </h1>
     <hr>
-    {% for link in links %}
-        <a href="{{ link.url }}" class="link__url">
-             <div class="card__link">
-                <div class="card__image">
-                    <img class="" src="{{ link.image ? link.image : "https://via.placeholder.com/150/250" }}" alt="Mon image ici">
-                </div>
-                <div class="card__body">
-                    <div class="card__badge">
-                        <span class="badge badge-success">News</span>
-                        <span class="badge badge-warning">Features</span>
-                    </div>
-                    <h3 class="card__title">{{ link.name }}</h3>
-                    <div class="card__info">
-                        <span>1 minute</span> -
-                        <span>De TuxBoy</span>
-                    </div>
-                </div>
-                <div class="card__tags">
-                    <span class="tag">Frontend</span>
-                    <span class="tag">Symfony</span>
-                    <span class="tag">PHP</span>
-                </div>
-            </div>
-        </a>
-    {% endfor %}
-
+    {% include 'partials/links.twig' %}
 
 {% endblock %}

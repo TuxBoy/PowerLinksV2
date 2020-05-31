@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\LinkRepository;
+use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,7 +21,7 @@ class Link
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private ?string $url = null;
 
@@ -33,19 +36,19 @@ class Link
     private ?string $description = null;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": 0})
      */
-    private bool $seen = false;
+    private bool $seen;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $created_at = null;
+    private ?DateTimeInterface $created_at = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $updated_at = null;
+    private ?DateTimeInterface $updated_at = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="links")
@@ -55,7 +58,17 @@ class Link
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $image;
+    private ?string $image = null;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="links", cascade={"persist"})
+     */
+    private Collection $tags;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,24 +123,24 @@ class Link
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
 
@@ -154,6 +167,32 @@ class Link
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
 
         return $this;
     }

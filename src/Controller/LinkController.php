@@ -17,14 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LinkController extends AbstractController
 {
-    /**
-     * @Route("/link", name="link.index")
-     */
-    public function index(LinkRepository $linkRepository): Response
+	/**
+	 * @Route("/link", name="link.index")
+	 *
+	 * @param LinkRepository $linkRepository
+	 * @param SearchData $data
+	 * @return Response
+	 */
+    public function index(LinkRepository $linkRepository, SearchData $data): Response
     {
-    	$search = new SearchData($this->getUser());
         return $this->render('link/index.html.twig', [
-        	'links' => $linkRepository->findAllLinks($search)
+        	'links' => $linkRepository->findAllLinks($data)
         ]);
     }
 
@@ -46,7 +49,9 @@ class LinkController extends AbstractController
 			$link
 				->setUser($this->getUser())
 				->setCreatedAt(new DateTime())
-				->setUpdatedAt(new DateTime());
+				->setUpdatedAt(new DateTime())
+				->setSeen(false)
+			;
 			$entityManager->persist($link);
 			$entityManager->flush();
 

@@ -22,7 +22,7 @@ class LinkRepository extends ServiceEntityRepository
         parent::__construct($registry, Link::class);
     }
 
-	public function findAllLinks(SearchData $search)
+	public function findAllLinks(SearchData $search, int $limit = null)
 	{
 		$query = $this
 			->createQueryBuilder('l')
@@ -44,6 +44,9 @@ class LinkRepository extends ServiceEntityRepository
 			$query
 				->andWhere('l.user = :user')
 				->setParameter('user', $search->user->getId());
+		}
+		if (null !== $limit) {
+			$query->setMaxResults($limit);
 		}
 		$query->orderBy('l.created_at', $search->getOrderBy());
 

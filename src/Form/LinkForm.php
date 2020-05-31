@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Link;
+use App\Form\Type\TagType;
 use SebastianBergmann\CodeCoverage\Report\Text;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -23,6 +24,7 @@ class LinkForm extends AbstractType
             ->add('name', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Titre du lien', 'class' => 'title']])
             ->add('image', HiddenType::class, ['label' => false, 'attr' => ['class' => 'image']])
             ->add('description', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Une courte description', 'class' => 'description']])
+	        ->add('tags', TagType::class, ['label' => false, 'attr' => ['placeholder' => 'Tags', 'class' => 'link_tags']])
         ;
 
         if ($link && null !== $link->getId()) {

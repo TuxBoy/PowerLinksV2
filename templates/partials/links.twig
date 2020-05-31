@@ -1,34 +1,25 @@
-<div class="row">
-    {% for link in links %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm {{ link.seen ? 'seen' : '' }}">
-                {% if link.seen %}
-                    <span class="badge badge-pill badge-success link__seen__badge">Vu</span>
-                {% endif %}
-                {% if link.image %}
-                    <img class="link__image" src="{{ link.image }}" alt="">
-                {% else %}
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-                {% endif %}
-                <div class="card-body">
-                    <p class="card-text">{{ link.name }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                            <a href="{{ path('link.seen', {'id': link.id}) }}" class="btn btn-sm btn-outline-secondary">Visiter</a>
-
-                            {% if app.user and app.user.id == link.user.id or is_granted('ROLE_ADMIN') %}
-                                <a href="{{ path('link.edit', {id: link.id}) }}" title="Editer le lien" class="btn btn-sm btn-outline-secondary">Editer</a>
-                                <form action="{{ path('link.delete', {id: link.id}) }}" method="post">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" title="Supprimer le lien" class="btn btn-sm btn-outline-danger">X</button>
-                                </form>
-                            {% endif %}
-                        </div>
-                        <small class="text-muted">9 mins</small>
-                        <small class="text-muted">{{ link.user.username }}</small>
-                    </div>
+{% for link in links %}
+    <a href="{{ link.url }}" class="link__url" title="{{ link.description }}">
+        <div class="card__link">
+            <div class="card__image">
+                <img class="" src="{{ link.image ? link.image : "https://via.placeholder.com/150/250" }}" alt="Mon image ici">
+            </div>
+            <div class="card__body">
+                <div class="card__badge">
+                    <span class="badge badge-success">News</span>
+                    <span class="badge badge-warning">Features</span>
+                </div>
+                <h3 class="card__title">{{ link.name }}</h3>
+                <div class="card__info">
+                    <span>{{ link.createdAt | date('d m Y') }}</span> -
+                    <span>De {{ link.user.username }}</span>
                 </div>
             </div>
+            <div class="card__tags">
+                {% for tag in link.tags %}
+                 <span class="tag">{{ tag.name | capitalize }}</span>
+                {% endfor %}
+            </div>
         </div>
-    {% endfor %}
-</div>
+    </a>
+{% endfor %}

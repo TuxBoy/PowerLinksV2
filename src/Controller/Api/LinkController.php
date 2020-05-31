@@ -32,7 +32,8 @@ class LinkController extends AbstractController
 		return new JsonResponse([
 			'title'       => $metadata->getTitle(),
 			'description' => $metadata->getDescription(),
-			'image'       => $metadata->getImage()
+			'image'       => $metadata->getImage(),
+			'tags'        => join(', ', $metadata->getKeywords()),
 		]);
 	}
 

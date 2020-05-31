@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Data;
 
 use App\Entity\User;
+use Symfony\Component\Security\Core\Security;
 
 class SearchData
 {
@@ -19,9 +20,9 @@ class SearchData
 
 	public ?string $search = null;
 
-	public function __construct(?User $user)
+	public function __construct(Security $security)
 	{
-		$this->user = $user;
+		$this->user = $security->getUser();
 	}
 
 	/**
