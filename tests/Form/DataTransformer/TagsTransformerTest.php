@@ -48,7 +48,7 @@ class TagsTransformerTest extends TestCase
 		$tags        = $transformer->reverseTransform('foo');
 		$tag         = (new Tag())->setName('foo');
 
-		$this->assertEquals(1, \count($tags));
+		$this->assertCount(1, $tags);
 		$this->assertEquals([$tag], $tags);
 	}
 
