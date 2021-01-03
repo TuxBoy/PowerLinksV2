@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Data\SearchData;
 use App\Entity\Link;
-use App\Form\SearchForm;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,5 +61,20 @@ class LinkRepository extends ServiceEntityRepository
 		}
 
 		return $link;
+    }
+
+	public function findByUser(User $user, int $id): ?Link
+	{
+		return $this->createQueryBuilder('l')
+			->select('l', 'u')
+			->leftJoin('l.user', 'u')
+			->where('l.id = :id')
+			->andWhere('l.user = :user')
+			->setParameters([
+				'id' => $id,
+				'user' => $user->getId(),
+			])
+			->getQuery()->getSingleResult()
+		;
     }
 }

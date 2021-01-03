@@ -86,6 +86,11 @@
   color: #838c89;
 }
 
+.link__url {
+  position: relative;
+  display: block;
+}
+
 @media only screen and (max-width: 580px) {
   .card__link {
     position: relative;

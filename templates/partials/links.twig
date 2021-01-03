@@ -1,5 +1,6 @@
 {% for link in links %}
     <a href="{{ link.url }}" class="link__url" title="{{ link.description }}">
+        <delete-item id="{{ link.id }}"></delete-item>
         <div class="card__link">
             <div class="card__image">
                 <img class="" src="{{ link.image ? link.image : "https://via.placeholder.com/150/250" }}" alt="Mon image ici">
