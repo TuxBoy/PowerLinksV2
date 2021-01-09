@@ -1,7 +1,7 @@
 import '../css/app.scss'
 import Link from "./Link";
 import MetaLink from "./elements/MetaLink";
-import DeleteItem from "./elements/DeleteItem";
+import Toolbox from "./elements/Toolbox";
 
 
 const showFormAddLink = document.querySelector('#showFormAddLink')
@@ -19,4 +19,4 @@ if (showFormFilter !== null) {
 }
 
 customElements.define('meta-link', MetaLink)
-customElements.define('delete-item', DeleteItem)
+customElements.define('toolbox-item', Toolbox)

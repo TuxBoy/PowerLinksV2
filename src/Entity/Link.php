@@ -196,4 +196,9 @@ class Link
 
         return $this;
     }
+
+	public function canRemove(User $user): bool
+	{
+		return $this->getUser()->getId() === $user->getId();
+    }
 }

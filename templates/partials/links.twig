@@ -1,6 +1,8 @@
 {% for link in links %}
-    <a href="{{ link.url }}" class="link__url" title="{{ link.description }}">
-        <delete-item id="{{ link.id }}"></delete-item>
+    <a href="{{ path('link.seen', {id: link.id}) }}" class="link__url {{ link.canRemove(app.user) and link.seen ? 'seen' : '' }}" title="{{ link.description }}">
+       {% if app.user and link.canRemove(app.user) %}
+           <toolbox-item id="{{ link.id }}" edit_target="{{ path('link.edit', {id: link.id}) }}"></toolbox-item>
+       {% endif %}
         <div class="card__link">
             <div class="card__image">
                 <img class="" src="{{ link.image ? link.image : "https://via.placeholder.com/150/250" }}" alt="Mon image ici">

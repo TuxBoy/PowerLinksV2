@@ -113,9 +113,6 @@ class LinkController extends AbstractController
 	public function seen(int $id, LinkRepository $linkRepository, EntityManagerInterface $entityManager): Response
 	{
 		$link = $linkRepository->findOrFail($id);
-		$link->setSeen(true);
-		$entityManager->persist($link);
-		$entityManager->flush();
 
 		return $this->redirect($link->getUrl());
     }
