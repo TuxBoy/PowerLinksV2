@@ -34,6 +34,7 @@ class TagsTransformer implements DataTransformerInterface
 			return [];
 		}
 		$names    = array_unique(array_filter(array_map('trim', explode(',', $value))));
+		$names    = array_map(fn ($name) => strtolower($name), $names);
 		$tags     = $this->repository->findBy(['name' => $names]);
 		$newNames = array_diff($names, $tags);
 

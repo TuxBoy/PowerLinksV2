@@ -76,6 +76,28 @@ class TagsTransformerTest extends TestCase
 	/**
 	 * @covers \App\Form\DataTransformer\TagsTransformer::reverseTransform
 	 */
+	public function testWithTagSensibilityCase(): void
+	{
+		/** @var $repository MockObject|TagRepository */
+		$repository = $this
+			->getMockBuilder(TagRepository::class)
+			->disableOriginalConstructor()
+			->setMethods(['findBy'])
+			->getMock();
+		$tag  = (new Tag())->setName('foo');
+		$tag2 = (new Tag())->setName('bar');
+
+		$repository->expects($this->once())->method('findBy')->willReturn([$tag, $tag2]);
+		$transformer = new TagsTransformer($repository);
+		$tags        = $transformer->reverseTransform('Foo, Bar, test, foo');
+
+		$this->assertNotEmpty($tags);
+		$this->assertCount(3, $tags);
+	}
+
+	/**
+	 * @covers \App\Form\DataTransformer\TagsTransformer::reverseTransform
+	 */
 	public function testAddMultipleTags(): void
 	{
 		/** @var $repository MockObject|TagRepository */
@@ -86,7 +108,7 @@ class TagsTransformerTest extends TestCase
 			->getMock();
 		$tag = (new Tag())->setName('foo');
 
-		$repository->expects($this->once())->method('findBy')->willReturn([]);
+		$repository->expects($this->once())->method('findBy')->willReturn([$tag]);
 		$transformer = new TagsTransformer($repository);
 		$tags        = $transformer->reverseTransform('foo,bar, test ');
 
