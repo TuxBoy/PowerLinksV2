@@ -1,5 +1,5 @@
 {% for link in links %}
-    <a href="{{ path('link.seen', {id: link.id}) }}" class="link__url {{ link.canRemove(app.user) and link.seen ? 'seen' : '' }}" title="{{ link.description }}">
+    <a href="{{ path('link.seen', {id: link.id}) }}" class="link__url {{ is_granted('ROLE_ADMIN') or (link.canRemove(app.user) and link.seen ? 'seen' : '') }}" title="{{ link.description }}">
        {% if app.user and link.canRemove(app.user) %}
            <toolbox-item id="{{ link.id }}" edit_target="{{ path('link.edit', {id: link.id}) }}"></toolbox-item>
        {% endif %}

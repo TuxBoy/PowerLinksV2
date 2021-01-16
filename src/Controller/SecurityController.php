@@ -51,11 +51,14 @@ class SecurityController extends AbstractController
 		$form = $this->createForm(UserType::class, $user);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
-			$user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+			$user
+				->setRoles([User::ROLES['user']])
+				->setPassword($encoder->encodePassword($user, $user->getPassword()))
+			;
 			$entityManager->persist($user);
 			$entityManager->flush();
 
-			$this->addFlash('success', 'Bien joué ! Votre a bien été créé.');
+			$this->addFlash('success', 'Bien joué ! Votr compte a bien été créé.');
 			return $this->redirectToRoute('app_login');
 		}
 		return $this->render('security/register.html.twig', ['form' => $form->createView()]);

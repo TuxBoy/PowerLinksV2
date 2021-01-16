@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+	public const ROLES = ['user' => 'ROLE_USER', 'admin' => 'ROLE_ADMIN'];
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -86,7 +88,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = self::ROLES['user'];
 
         return array_unique($roles);
     }
@@ -175,4 +177,15 @@ class User implements UserInterface
 
         return $this;
     }
+
+	/**
+	 * @param int $id
+	 * @return User
+	 */
+	public function setId(int $id): User
+	{
+		$this->id = $id;
+
+		return $this;
+	}
 }

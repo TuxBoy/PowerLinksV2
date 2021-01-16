@@ -72,6 +72,8 @@ class LinkController extends AbstractController
 	public function edit(int $id, Request $request, EntityManagerInterface $entityManager, LinkRepository $linkRepository)
 	{
 		$link = $linkRepository->findOrFail($id);
+		$this->denyAccessUnlessGranted('edit', $link);
+
 		$form = $this->createForm(LinkForm::class, $link);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
