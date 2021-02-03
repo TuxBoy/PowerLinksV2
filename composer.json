@@ -5,6 +5,7 @@
         "php": "^7.4.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "symfony/apache-pack": "^1.0",
         "symfony/console": "5.0.*",
         "symfony/css-selector": "5.0.*",
         "symfony/dom-crawler": "5.0.*",
@@ -61,7 +62,10 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "tt": "phpunit-watcher watch"
+        "tt": "phpunit-watcher watch",
+        "compile": [
+            "php bin/console doctrine:migration:migrate"
+        ]
     },
     "conflict": {
         "symfony/symfony": "*"
