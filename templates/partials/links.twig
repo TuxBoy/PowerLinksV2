@@ -9,8 +9,9 @@
             </div>
             <div class="card__body">
                 <div class="card__badge">
-                    <span class="badge badge-success">News</span>
-                    <span class="badge badge-warning">Features</span>
+                    {% if link.isNew() %}
+                        <span class="badge badge-success">News</span>
+                    {% endif %}
                 </div>
                 <h3 class="card__title">{{ link.name }}</h3>
                 <div class="card__info">

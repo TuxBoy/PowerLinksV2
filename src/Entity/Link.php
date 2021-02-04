@@ -204,4 +204,9 @@ class Link
 		}
 		return $this->getUser()->getId() === $user->getId();
     }
+
+	public function isNew(): bool
+	{
+		return $this->created_at >= new \DateTime('-2days');
+    }
 }
