@@ -44,16 +44,16 @@ services:
     image: mailhog/mailhog
     ports:
       - 1080:8025
-  node:
-    user: '${USER_ID}:${GROUP_ID}'
-    build:
-      context: ./tools/docker/node
-    command: yarn run dev
-    working_dir: /usr/src/app
-    volumes:
-      - .:/usr/src/app
-    ports:
-      - 3000:3000
+ #node:
+ #  user: '${USER_ID}:${GROUP_ID}'
+ #  build:
+ #    context: ./tools/docker/node
+ #  command: yarn run dev
+ #  working_dir: /usr/src/app
+ #  volumes:
+ #    - .:/usr/src/app
+ #  ports:
+ #    - 3000:3000
 volumes:
   db-data:
     driver: local
