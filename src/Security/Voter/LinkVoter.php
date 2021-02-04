@@ -40,7 +40,7 @@ class LinkVoter extends AccessVoter
 			return true;
 		}
 
-		parent::voteOnAttribute($attribute, $subject, $token);
+		return parent::voteOnAttribute($attribute, $subject, $token);
 	}
 
 }
