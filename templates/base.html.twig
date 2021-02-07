@@ -32,7 +32,7 @@
                     <a href="{{ path('user.profile', {id: app.user.id}) }}" class="nav-link"><img src="{{ app.user.avatar }}" alt="{{ app.user.username }}" class="rounded-circle"></a>
                 </li>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item" style="line-height: 2;"><a href="" class="nav-link"><strong>Admin</strong></a></li>
+                    <li class="nav-item" style="line-height: 2;"><a href="{{ path('admin_dashboard') }}" class="nav-link"><strong>Admin</strong></a></li>
                 {% endif %}
                 <li class="nav-item" style="line-height: 2;"><a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a></li>
             {% else %}

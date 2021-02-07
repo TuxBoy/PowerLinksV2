@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title 'Utilisateurs' %}
+
+{% block body %}
+    <h1>Utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">username</th>
+            <th scope="col">Date de création</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td><a href="">{{ user.username }}</a></td>
+                <td>{{ user.createdAt | ago }}</td>
+                <td>{{ user.roles | join(', ') }}</td>
+                <td>
+                    <a href="{{ path('admin_user_edit', {user: user.id}) }}" class="btn btn-success" title="Editer l'utilisateur"><img src="/images/pencil.svg" alt=""></a>
+                    <form action="{{ path('admin_user_delete', {user: user.id}) }}">
+                        <button type="submit" class="btn btn-danger" title="Supprimer l'utilisateur"><img src="/images/trash.svg" alt=""></button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

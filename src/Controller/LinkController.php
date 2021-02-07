@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class LinkController extends AbstractController
+final class LinkController extends AbstractController
 {
 	/**
 	 * @Route("/link", name="link.index")

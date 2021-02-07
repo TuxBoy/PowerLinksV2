@@ -6,7 +6,7 @@ namespace App\Tests\Service;
 use App\Service\MetadataService;
 use PHPUnit\Framework\TestCase;
 
-class MetadataServiceTest extends TestCase
+final class MetadataServiceTest extends TestCase
 {
 
 	public function testGetMetaTitle(): void

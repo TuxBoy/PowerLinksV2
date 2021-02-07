@@ -1,7 +1,9 @@
 import '../css/app.scss'
+
 import Link from "./Link";
 import MetaLink from "./elements/MetaLink";
 import Toolbox from "./elements/Toolbox";
+import { TimeAgo } from "./elements/TimeAgo.js";
 
 
 const showFormAddLink = document.querySelector('#showFormAddLink')
@@ -20,3 +22,4 @@ if (showFormFilter !== null) {
 
 customElements.define('meta-link', MetaLink)
 customElements.define('toolbox-item', Toolbox)
+customElements.define('time-ago', TimeAgo)

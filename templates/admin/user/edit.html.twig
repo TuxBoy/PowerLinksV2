@@ -1,0 +1,9 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title 'Utilisateurs' %}
+
+{% block body %}
+    <h1>Editer l'utilisateur {{ user.username }}</h1>
+
+    {{ form(form) }}
+{% endblock %}

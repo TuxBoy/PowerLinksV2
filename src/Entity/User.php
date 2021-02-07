@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Traits\HasTimestamps;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+	use HasTimestamps;
+
 	public const ROLES = ['user' => 'ROLE_USER', 'admin' => 'ROLE_ADMIN'];
 
     /**
@@ -39,7 +42,6 @@ class User implements UserInterface
     private array $roles = [];
 
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private ?string $password = null;
