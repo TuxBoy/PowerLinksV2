@@ -197,12 +197,14 @@ class Link
         return $this;
     }
 
-	public function canRemove(?User $user): bool
+	public function canRemove(?User $currentUser): bool
 	{
-		if ($user === null) {
+		if ($currentUser === null) {
 			return false;
 		}
-		return $this->getUser()->getId() === $user->getId();
+
+		return ($this->getUser()->getId() === $currentUser->getId())
+			|| in_array(User::ROLES['admin'], $currentUser->getRoles());
     }
 
 	public function isNew(): bool
