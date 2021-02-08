@@ -24,7 +24,14 @@
                 <td>{{ user.roles | join(', ') }}</td>
                 <td>
                     <a href="{{ path('admin_user_edit', {user: user.id}) }}" class="btn btn-success" title="Editer l'utilisateur"><img src="/images/pencil.svg" alt=""></a>
-                    <form action="{{ path('admin_user_delete', {user: user.id}) }}">
+                    <form
+                            class="delete__button"
+                            action="{{ path('admin_user_delete', {user: user.id}) }}"
+                            method="post"
+                            onsubmit="confirm('Etes-vous sur de vouloir supprimer cet item ?')"
+                    >
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
                         <button type="submit" class="btn btn-danger" title="Supprimer l'utilisateur"><img src="/images/trash.svg" alt=""></button>
                     </form>
                 </td>

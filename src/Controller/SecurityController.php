@@ -53,6 +53,7 @@ final class SecurityController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$user
 				->setRoles([User::ROLES['user']])
+				->setCreatedAt(new \DateTime())
 				->setPassword($encoder->encodePassword($user, $user->getPassword()))
 			;
 			$entityManager->persist($user);

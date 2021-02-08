@@ -67,6 +67,7 @@ final class UserController extends AbstractController
 	public function delete(User $user, EntityManagerInterface $em): Response
 	{
 		$em->remove($user);
+		$em->flush();
 
 		$this->addFlash('success', "L'utilisateur a bien été supprimé");
 		return $this->redirectToRoute('admin_user');
