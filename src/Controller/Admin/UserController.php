@@ -4,9 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\Admin\UserType;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,23 +11,21 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/admin", name="admin_")
  */
-final class UserController extends AbstractController
+final class UserController extends CrudController
 {
 
-	private UserRepository $userRepository;
+	protected string $entity = User::class;
 
-	public function __construct(UserRepository $userRepository)
-	{
-		$this->userRepository = $userRepository;
-	}
+	protected string $formType = UserType::class;
+
+	protected string $templatePath = 'user';
 
 	/**
      * @Route("/user", name="user")
      */
     public function index(): Response
     {
-    	$users = $this->userRepository->findAll();
-        return $this->render('admin/user/index.html.twig', ['users' => $users]);
+    	return $this->crudIndex();
     }
 
 
@@ -39,17 +34,16 @@ final class UserController extends AbstractController
 	 *
 	 * @param User $user
 	 * @param Request $request
-	 * @param EntityManagerInterface $em
 	 * @return Response
 	 */
-	public function edit(User $user, Request $request, EntityManagerInterface $em): Response
+	public function edit(User $user, Request $request): Response
 	{
 		$form = $this->createForm(UserType::class, $user);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
 			$user->setUpdatedAt(new \DateTime());
-			$em->persist($user);
-			$em->flush();
+			$this->em->persist($user);
+			$this->em->flush();
 
 			$this->addFlash('success', "L'utilisateur a bien été modifié");
 			return $this->redirectToRoute('admin_user');
@@ -61,16 +55,11 @@ final class UserController extends AbstractController
 	 * @Route("/user/delete/{user}", name="user_delete", methods={"DELETE"})
 	 *
 	 * @param User $user
-	 * @param EntityManagerInterface $em
 	 * @return Response
 	 */
-	public function delete(User $user, EntityManagerInterface $em): Response
+	public function delete(User $user): Response
 	{
-		$em->remove($user);
-		$em->flush();
-
-		$this->addFlash('success', "L'utilisateur a bien été supprimé");
-		return $this->redirectToRoute('admin_user');
+		return $this->crudDelete($user);
     }
 
 }

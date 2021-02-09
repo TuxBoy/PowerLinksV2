@@ -4,16 +4,23 @@
 
 {% block body %}
         {% if app.user %}
-        <a
-                class="btn btn-success border-bottom pb-2 mt-2 mb-3 showFormAddLink"
-                id="showFormAddLink" href="#" title="Cliquez ici ou sur la touche 't' pour afficher le formulaire puis 'Echap' pour le fermer">
-            Ajouter un lien
-        </a>
-        <a
-                class="btn btn-success border-bottom pb-2 mt-2 mb-3"
-                id="showFormFilterButton" href="#" title="Afficher le formulaire du filtre">
-            Filter
-        </a>
+        <div class="d-flex">
+            <a
+                    class="btn btn-success m-1 showFormAddLink"
+                    id="showFormAddLink" href="#" title="Cliquez ici ou sur la touche 't' pour afficher le formulaire puis 'Echap' pour le fermer">
+                Ajouter un lien
+            </a>
+            <div class="dropdown ms-auto">
+                <a class="btn btn-secondary dropdown-toggle" href="#" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    Trié par :
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="{{ path('link') }}">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </div>
 
         <meta-link>
             {{ form_start(form, {attr: {class: 'form addFormLink hide', id: 'addFormLink'}}) }}
@@ -23,12 +30,8 @@
         </meta-link>
     {% endif %}
 
-    {{ form_start(filterForm, {attr: {class: 'showFormFilter hide', id: 'formFilter'}}) }}
-        <h3>Filter par</h3>
-        {{ form_widget(filterForm) }}
-        <button type="submit" class="btn btn-primary">Appliquer</button>
-         <a href="{{ path('root') }}" class="btn btn-danger" title="Rénitialiser le filtre">Reset</a>
-    {{ form_end(filterForm) }}
+
+
     <h2 class="border-bottom border-gray pb-2 mb-0">Les derniers liens ajoutés</h2>
 
     {% include 'partials/links.twig' with {'links': links} only %}

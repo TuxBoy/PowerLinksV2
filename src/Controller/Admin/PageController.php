@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/admin", name="admin_")
  */
-final class PageController extends BaseController
+final class PageController extends CrudController
 {
     /**
      * @Route("/", name="dashboard")

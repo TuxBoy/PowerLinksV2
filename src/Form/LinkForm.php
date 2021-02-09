@@ -24,12 +24,13 @@ class LinkForm extends AbstractType
             ->add('name', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Titre du lien', 'class' => 'title']])
             ->add('image', HiddenType::class, ['label' => false, 'attr' => ['class' => 'image']])
             ->add('description', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Une courte description', 'class' => 'description']])
-	        ->add('tags', TagType::class, ['label' => false, 'attr' => ['placeholder' => 'Tags', 'class' => 'link_tags']])
+	        ->add('tags', TagType::class,
+		        [
+		        	'label' => false,
+			        'attr' => ['placeholder' => 'Tags', 'class' => 'link_tags js-choice']
+		        ]
+	        )
         ;
-
-        if ($link && null !== $link->getId()) {
-        	$builder->add('seen', CheckboxType::class, ['label' => 'Marquer comme vu', 'data' => false, 'required' => false]);
-        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
