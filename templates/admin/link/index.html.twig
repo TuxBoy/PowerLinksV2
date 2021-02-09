@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title 'Liens' %}
+
+{% block body %}
+    <h1>Gestion des liens</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">name</th>
+            <th scope="col">Date de création</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for link in items %}
+            <tr>
+                <th scope="row">{{ link.id }}</th>
+                <td><a href="">{{ link.name }}</a></td>
+                <td>{{ link.createdAt | ago }}</td>
+                <td>
+                    <a href="{{ path('admin_link_edit', {link: link.id}) }}" class="btn btn-success" title="Editer le lien"><img src="/images/pencil.svg" alt=""></a>
+                    <form
+                            class="delete__button"
+                            action="{{ path('admin_link_delete', {link: link.id}) }}"
+                            method="post"
+                            onsubmit="confirm('Etes-vous sur de vouloir supprimer cet item ?')"
+                    >
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+                        <button type="submit" class="btn btn-danger" title="Supprimer ce lien"><img src="/images/trash.svg" alt=""></button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
