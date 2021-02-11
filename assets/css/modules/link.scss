@@ -123,3 +123,15 @@
 .seen {
   opacity: .4;
 }
+
+.showFormAddLink {
+  position: fixed;
+  border-radius: 50%;
+  bottom: 40px;
+  left: 13px;
+  font-size: 2rem;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  line-height: 42px;
+}

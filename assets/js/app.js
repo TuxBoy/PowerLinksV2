@@ -6,25 +6,13 @@ import Toolbox from "./elements/Toolbox";
 import { TimeAgo } from "./elements/TimeAgo.js";
 import Choices from "choices.js";
 
-
-const showFormAddLink = document.querySelector('#showFormAddLink')
-const addFormLink = document.querySelector('#addFormLink')
-if (showFormAddLink !== null) {
-    const link = new Link(showFormAddLink, addFormLink)
-    link.init()
-}
-
-const showFormFilterButton = document.querySelector('#showFormFilterButton')
-const showFormFilter = document.querySelector('.showFormFilter')
-if (showFormFilter !== null) {
-    const link = new Link(showFormFilterButton, showFormFilter, {keyCode: 'f'})
-    link.init()
-}
+const link = new Link('#addLink')
 
 const choicesElement = document.querySelector('.js-choice')
 if (choicesElement !== null) {
     new Choices(choicesElement, {
         duplicateItemsAllowed: false,
+        placeholder: 'Tags',
         addItemText: (value) => `Touche entrer pour ajouter <b>"${value}"</b>`
     })
 }

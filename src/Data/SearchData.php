@@ -16,7 +16,7 @@ class SearchData
 
 	public ?User $user = null;
 
-	public bool $onlyUser = false;
+	public string $byCurrentUser = 'all';
 
 	public ?string $search = null;
 
@@ -28,9 +28,9 @@ class SearchData
 	/**
 	 * @return string
 	 */
-	public function getOrderBy(): string
+	public function getOrderBy(): ?string
 	{
-		return strtoupper($this->orderBy);
+		return $this->orderBy ? strtoupper($this->orderBy) : 'DESC';
 	}
 
 }

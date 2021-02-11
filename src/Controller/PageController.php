@@ -27,6 +27,14 @@ final class PageController extends AbstractController
 	 */
     public function index(Request $request, LinkRepository $linkRepository, SearchData $data): Response
     {
+    	// Todo Voir pour passer cette logique dans un ParamConverter (ou autre)
+    	if ($request->query->has('orderBy') === false) {
+    		$request->query->set('orderBy', 'desc');
+	    }
+
+    	if ($request->query->has('byCurrentUser') === false) {
+		    $request->query->set('byCurrentUser', 'all');
+	    }
     	$filterForm = $this->createForm(SearchForm::class, $data);
     	$filterForm->handleRequest($request);
 

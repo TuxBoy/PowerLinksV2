@@ -4,33 +4,43 @@
 
 {% block body %}
         {% if app.user %}
-        <div class="d-flex">
-            <a
-                    class="btn btn-success m-1 showFormAddLink"
-                    id="showFormAddLink" href="#" title="Cliquez ici ou sur la touche 't' pour afficher le formulaire puis 'Echap' pour le fermer">
-                Ajouter un lien
-            </a>
-            <div class="dropdown ms-auto">
-                <a class="btn btn-secondary dropdown-toggle" href="#" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    Trié par :
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="{{ path('link') }}">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+            {{ form_start(filterForm, {attr: {class: 'filter'}}) }}
+                {{ form_row(filterForm.orderBy) }}
+                {{ form_row(filterForm.search) }}
+                {{ form_row(filterForm.byCurrentUser) }}
+                <button type="submit" class="btn btn-primary">Filtrer</button>
+                <a href="{{ path('root') }}" class="btn btn-danger" title="Rénitialiser le filtre">Annuler</a>
+            {{ form_end(filterForm) }}
+
+        <a
+                class="btn btn-success m-1 showFormAddLink"
+                id="showFormAddLink" href="#" data-bs-toggle="modal" data-bs-target="#addLink" title="Cliquez ici ou sur la touche 't' pour afficher le formulaire puis 'Echap' pour le fermer">
+            +
+        </a>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addLink" tabindex="-1" aria-labelledby="addLink" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un lien</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <meta-link>
+                            {{ form_start(form, {attr: {class: 'form'}}) }}
+                                {{ form_widget(form) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                    {{ form_end(form) }}
+                    </meta-link>
+                </div>
             </div>
         </div>
-
-        <meta-link>
-            {{ form_start(form, {attr: {class: 'form addFormLink hide', id: 'addFormLink'}}) }}
-                {{ form_widget(form) }}
-                <button type="submit" class="btn btn-primary">Ajouter</button>
-            {{ form_end(form) }}
-        </meta-link>
     {% endif %}
-
-
 
     <h2 class="border-bottom border-gray pb-2 mb-0">Les derniers liens ajoutés</h2>
 

@@ -1,48 +1,32 @@
-import { post } from "./utils/api";
-
 interface OptionsForm {
     withShortcut?: Boolean,
     keyCode?: String
 }
 
-class Link {
+export default class Link {
 
-    private element: Element
-    private form: Element
-    private urlInput: any | null;
-    private options: OptionsForm;
+    private options: OptionsForm
+    // @ts-ignore
+    private addLinkModal: bootstrap.Modal
 
-    constructor(element: Element, form: Element, options?: OptionsForm) {
-        this.element = element
-        this.form    = form;
+    constructor(target: string, options?: OptionsForm) {
+        // @ts-ignore
+        this.addLinkModal = new bootstrap.Modal(document.querySelector(target), {
+            keyboard: false
+        })
+        this.shortcutHandler = this.shortcutHandler.bind(this)
         this.options = Object.assign({withShortcut: true, keyCode: 't'}, options || {});
+
+        window.addEventListener('keydown', this.shortcutHandler)
     }
 
-    public showFormWithKey (event: KeyboardEvent) {
-        if (this.form === null) return
-        if (event.key === this.options.keyCode && this.form.classList.contains('hide')) {
+    public shortcutHandler (event: KeyboardEvent) {
+        if (event.key === 'k' && event.ctrlKey === true) {
             event.preventDefault()
-            this.form.classList.toggle('hide')
-            if (! this.urlInput) return;
-            this.urlInput.focus()
+            this.addLinkModal.show()
         } else if (event.key === 'Escape') {
-            this.form.classList.toggle('hide')
-        }
-    }
-
-    public init () {
-        if (this.element) {
-            this.element.addEventListener('click', (event: Event) => {
-                event.preventDefault()
-                if (! this.form) return
-                this.form.classList.toggle('hide')
-            });
-            if (this.options.withShortcut) {
-                document.addEventListener('keydown', this.showFormWithKey.bind(this))
-            }
+            this.addLinkModal.hide()
         }
     }
 
 }
-
-export default Link

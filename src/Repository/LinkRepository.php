@@ -29,25 +29,27 @@ class LinkRepository extends ServiceEntityRepository
 			->select('l', 'u')
 			->join('l.user', 'u');
 
-		if (null !== $search->seen) {
-			$query->where('l.seen = :seen')
-				->setParameter('seen', $search->seen);
-		}
-
 		if (!empty($search->search)) {
 			$query
 				->andWhere('l.description LIKE :description')
-				->setParameter('description', "%{$search->search}%");
+				->orWhere('l.name LIKE :name')
+				->setParameters([
+					'description' => "%{$search->search}%",
+					'name' => "%{$search->search}%",
+				])
+			;
 		}
 
-		if (true === $search->onlyUser) {
+		if ('me' === $search->byCurrentUser) {
 			$query
 				->andWhere('l.user = :user')
 				->setParameter('user', $search->user->getId());
 		}
+
 		if (null !== $limit) {
 			$query->setMaxResults($limit);
 		}
+
 		$query->orderBy('l.created_at', $search->getOrderBy());
 
 		return $query->getQuery()->getResult();

@@ -19,6 +19,9 @@ export default class Toolbox extends HTMLElement
     }
 
     async deleteHandler (event: any) {
+        if (!confirm('Etes vous sur de vouloir supprimer ce lien ?')) {
+            return
+        }
         event.preventDefault()
         try {
             const response = await fetch('/api/link/delete/' + this.linkId, {
@@ -44,9 +47,7 @@ export default class Toolbox extends HTMLElement
         return  `
            <div class="toolbox">
              <form class="delete__item">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+              <button type="button" class="close btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </form>
             <a class="edit__item" href="${this.edit_target}">
                 <span aria-hidden="true">

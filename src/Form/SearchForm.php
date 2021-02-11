@@ -21,21 +21,23 @@ class SearchForm extends AbstractType
 		$data = $builder->getData();
 		$builder
 			->add('orderBy',  ChoiceType::class, [
-				'choices' => ['Décroissant' => 'desc', 'Croissant' => 'asc'],
-				'label'   => false
-			])
-			->add('seen', ChoiceType::class, [
-				'choices' => ['Tout' => null, 'Vu' => true, 'Non vu' => false],
-				'label'   => false
+				'choices' => ['Moins résents' => 'asc', 'Plus récents' => 'desc'],
+				'label'   => false,
+				'attr'    => ['class' => 'form-select'],
 			])
 			->add('search',
 				TextType::class,
-				['label' => false, 'required' => false, 'attr' => ['placeholder' => 'Rechercher par nom']]
+				['label' => false, 'required' => false, 'attr' => ['placeholder' => 'Rechercher par nom / description']]
 			);
 		;
 
 		if (null !== $data->user) {
-			$builder->add('onlyUser', CheckboxType::class, ['label' => 'Afficher mes liens', 'required' => false]);
+			$builder->add('byCurrentUser', ChoiceType::class, [
+				'choices' => ['Tout' => 'all', 'Mes liens' => 'me'],
+				'label' => false,
+				'required' => false,
+				'attr'    => ['class' => 'form-select'],
+			]);
 		}
 	}
 
