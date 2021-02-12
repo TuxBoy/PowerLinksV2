@@ -24,6 +24,10 @@ export default class Link {
         if (event.key === 'k' && event.ctrlKey === true) {
             event.preventDefault()
             this.addLinkModal.show()
+            const link_form_url = document.querySelector('.urlField')
+            if (link_form_url) {
+                link_form_url.setAttribute('autofocus', 'autofocus')
+            }
         } else if (event.key === 'Escape') {
             this.addLinkModal.hide()
         }

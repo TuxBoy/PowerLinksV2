@@ -1,16 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-        {% if app.user %}
-            {{ form_start(filterForm, {attr: {class: 'filter'}}) }}
-                {{ form_row(filterForm.orderBy) }}
-                {{ form_row(filterForm.search) }}
+
+        {{ form_start(filterForm, {attr: {class: 'filter'}}) }}
+            {{ form_row(filterForm.orderBy) }}
+            {{ form_row(filterForm.search, {attr: {autofocus: 'autofocus'}}) }}
+            {% if app.user %}
                 {{ form_row(filterForm.byCurrentUser) }}
-                <button type="submit" class="btn btn-primary">Filtrer</button>
-                <a href="{{ path('root') }}" class="btn btn-danger" title="Rénitialiser le filtre">Annuler</a>
-            {{ form_end(filterForm) }}
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <a href="{{ path('root') }}" class="btn btn-danger" title="Rénitialiser le filtre">Annuler</a>
+        {{ form_end(filterForm) }}
+
+        {% if app.user %}
 
         <a
                 class="btn btn-success m-1 showFormAddLink"
