@@ -6,13 +6,16 @@ import Toolbox from "./elements/Toolbox";
 import { TimeAgo } from "./elements/TimeAgo.js";
 import Choices from "choices.js";
 
-const link = new Link('#addLink')
+if (document.querySelector('#addLink') !== null) {
+    const link = new Link(document.querySelector('#addLink'))
+}
 
 const choicesElement = document.querySelector('.js-choice')
 if (choicesElement !== null) {
     new Choices(choicesElement, {
         duplicateItemsAllowed: false,
-        placeholder: 'Tags',
+        placeholder: true,
+        placeholderValue: 'Tags',
         addItemText: (value) => `Touche entrer pour ajouter <b>"${value}"</b>`
     })
 }

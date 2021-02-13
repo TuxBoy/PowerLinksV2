@@ -11,12 +11,11 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Exception;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class LinkController extends AbstractController
+final class LinkController extends BaseController
 {
 	/**
 	 * @Route("/link", name="link.index")
@@ -40,7 +39,7 @@ final class LinkController extends AbstractController
 	 * @return Response
 	 * @throws Exception
 	 */
-	public function save(Request $request, EntityManagerInterface $entityManager)
+	public function save(Request $request, EntityManagerInterface $entityManager): Response
 	{
 		$form = $this->createForm(LinkForm::class, new Link);
 		$form->handleRequest($request);
@@ -61,18 +60,15 @@ final class LinkController extends AbstractController
     }
 
 	/**
-	 * @Route("/link/edit/{id}", name="link.edit", methods={"POST", "GET"})
+	 * @Route("/lien/modifier/{link}", name="link.edit", methods={"POST", "GET"})
 	 *
-	 * @param int $id
+	 * @param Link $link
 	 * @param Request $request
 	 * @param EntityManagerInterface $entityManager
-	 * @param LinkRepository $linkRepository
 	 * @return Response
-	 * @throws EntityNotFoundException
 	 */
-	public function edit(int $id, Request $request, EntityManagerInterface $entityManager, LinkRepository $linkRepository)
+	public function edit(Link $link, Request $request, EntityManagerInterface $entityManager): Response
 	{
-		$link = $linkRepository->findOrFail($id);
 		$this->denyAccessUnlessGranted('edit', $link);
 
 		$form = $this->createForm(LinkForm::class, $link);
@@ -97,7 +93,7 @@ final class LinkController extends AbstractController
 	 * @return Response
 	 * @throws EntityNotFoundException
 	 */
-	public function delete(int $id, EntityManagerInterface $entityManager, LinkRepository $linkRepository)
+	public function delete(int $id, EntityManagerInterface $entityManager, LinkRepository $linkRepository): Response
 	{
 		$entityManager->remove($linkRepository->findOrFail($id));
 		$entityManager->flush();
@@ -118,6 +114,18 @@ final class LinkController extends AbstractController
 		$link = $linkRepository->findOrFail($id);
 
 		return $this->redirect($link->getUrl());
+    }
+
+	/**
+	 * @Route("/lien/mes-liens-prives", name="link.private", methods={"GET"})
+	 *
+	 * @param LinkRepository $linkRepository
+	 * @return Response
+	 */
+	public function private(LinkRepository $linkRepository): Response
+	{
+		$linksOfCurrentUser = $linkRepository->findPrivateOfCurrentUser($this->getCurrentUser());
+		return $this->render('link/private.html.twig', ['links' => $linksOfCurrentUser]);
     }
 
 	/**

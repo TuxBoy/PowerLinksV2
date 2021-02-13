@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mes liens privés' %}
+
+{% block body %}
+
+    <h1>Mes liens privés</h1>
+
+    {% if links is empty %}
+        <p class="alert alert-danger">Vous n'avez aucun lien en privé.</p>
+    {% endif %}
+
+    {% include 'partials/links.twig' %}
+
+{% endblock %}
+

@@ -79,4 +79,23 @@ class LinkRepository extends ServiceEntityRepository
 			->getQuery()->getSingleResult()
 		;
     }
+
+	/**
+	 * Récupère les liens privés d'un utilisateur connecté
+	 *
+	 * @param User $user
+	 * @return Link[]
+	 */
+	public function findPrivateOfCurrentUser(User $user): array
+	{
+		return $this->createQueryBuilder('l')
+			->select('l', 'u')
+			->leftJoin('l.user', 'u')
+			->where('l.user = :user')
+			->andWhere('l.private = true')
+			->setParameter('user', $user->getId())
+			->getQuery()
+			->getResult();
+	}
+
 }

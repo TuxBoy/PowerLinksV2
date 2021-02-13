@@ -9,9 +9,9 @@ export default class Link {
     // @ts-ignore
     private addLinkModal: bootstrap.Modal
 
-    constructor(target: string, options?: OptionsForm) {
+    constructor(element: HTMLElement, options?: OptionsForm) {
         // @ts-ignore
-        this.addLinkModal = new bootstrap.Modal(document.querySelector(target), {
+        this.addLinkModal = new bootstrap.Modal(element, {
             keyboard: false
         })
         this.shortcutHandler = this.shortcutHandler.bind(this)

@@ -18,7 +18,8 @@
 
         <a
                 class="btn btn-success m-1 showFormAddLink"
-                id="showFormAddLink" href="#" data-bs-toggle="modal" data-bs-target="#addLink" title="Cliquez ici ou sur la touche 't' pour afficher le formulaire puis 'Echap' pour le fermer">
+                id="showFormAddLink" href="#" data-bs-toggle="modal" data-bs-target="#addLink"
+                title="Cliquez ici ou Ctrl + k pour afficher le formulaire d'ajout">
             +
         </a>
 
@@ -32,7 +33,7 @@
                     </div>
                     <div class="modal-body">
                         <meta-link>
-                            {{ form_start(form, {attr: {class: 'form'}}) }}
+                            {{ form_start(form, {attr: {class: 'form link__form'}}) }}
                                 {{ form_widget(form) }}
                     </div>
                     <div class="modal-footer">

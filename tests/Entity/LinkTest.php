@@ -13,6 +13,8 @@ final class LinkTest extends TestCase
 
 	/**
 	 * @dataProvider dateIsNewProvider
+	 * @param \DateTime $dateTime
+	 * @param bool $expected
 	 */
 	public function testLinkIsNew(\DateTime $dateTime, bool $expected): void
 	{
@@ -65,6 +67,38 @@ final class LinkTest extends TestCase
 			[new \DateTime('-1days'), true],
 			[new \DateTime('-3days'), false],
 		];
+	}
+
+	public function testIsNotPrivateForTheCurrentUser(): void
+	{
+		$user = (new User)->setId(1);
+		$link = (new Link())
+			->setPrivate(true)
+			->setUser($user);
+		;
+
+		$this->assertFalse($link->isPrivate($user));
+	}
+
+	public function testIsPrivateForTheAllUser(): void
+	{
+		$user = (new User)->setId(1);
+		$link = (new Link())
+			->setPrivate(true)
+			->setUser((new User())->setId(2));
+		;
+
+		$this->assertTrue($link->isPrivate($user));
+	}
+
+	public function testIsPrivateIfNotConnectedUser(): void
+	{
+		$link = (new Link())
+			->setPrivate(true)
+			->setUser((new User())->setId(2));
+		;
+
+		$this->assertTrue($link->isPrivate(null));
 	}
 
 }

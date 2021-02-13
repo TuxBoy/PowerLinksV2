@@ -65,6 +65,11 @@ class Link
      */
     private Collection $tags;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default": 0})
+     */
+    private bool $private = false;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -205,10 +210,31 @@ class Link
 
 		return ($this->getUser()->getId() === $currentUser->getId())
 			|| in_array(User::ROLES['admin'], $currentUser->getRoles());
-    }
+     }
+
+	public function isPrivate(?User $user): bool
+	{
+		if ($user === null && $this->private === true) {
+			return true;
+		}
+
+		return $this->private === true && $this->getUser()->getId() !== $user->getId();
+	}
 
 	public function isNew(): bool
 	{
-		return $this->created_at >= new \DateTime('-2days');
+    	return $this->created_at >= new \DateTime('-2days');
+    }
+
+    public function getPrivate(): bool
+    {
+        return $this->private;
+    }
+
+    public function setPrivate(bool $private): self
+    {
+        $this->private = $private;
+
+        return $this;
     }
 }

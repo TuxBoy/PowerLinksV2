@@ -27,9 +27,10 @@ class LinkForm extends AbstractType
 	        ->add('tags', TagType::class,
 		        [
 		        	'label' => false,
-			        'attr' => ['placeholder' => 'Tags', 'class' => 'link_tags js-choice']
+			        'attr' => ['placeholder' => 'Tags', 'class' => 'link_tags js-choice'],
 		        ]
 	        )
+	        ->add('private', CheckboxType::class, ['label' => 'Mettre le lien en privé', 'required' => false,])
         ;
     }
 
