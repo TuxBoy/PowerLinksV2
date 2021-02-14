@@ -27,4 +27,3 @@ tt: vendor/autoload.php ## Lance le watcher phpunit
 
 vendor/autoload.php: composer.lock
 	$(php) composer install
-	touch vendor/autoload.php

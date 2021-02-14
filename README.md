@@ -1,5 +1,7 @@
 # PowerLinks
 
+[![Build Status](https://travis-ci.org/TuxBoy/PowerLinksV2.svg?branch=master)](https://travis-ci.org/TuxBoy/PowerLinksV2)
+
 PowerLinks est un site qui permet d'ajouter et de gérer des liens de divers sites externes liés au développement web
 ou technologie de l'informatique.
 
