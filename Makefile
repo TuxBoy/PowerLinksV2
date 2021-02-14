@@ -23,3 +23,7 @@ test: vendor/autoload.php ## Execute les tests
 tt: vendor/autoload.php ## Lance le watcher phpunit
 	php bin/console cache:clear --env=test
 	php vendor/bin/phpunit-watcher watch --filter="nothing"
+
+vendor/autoload.php: composer.lock
+	$(php) composer install
+	touch vendor/autoload.php
