@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - 14
+services:
+  - docker
+install:
+  - make vendor/autoload.php
+script:
+  - make test
+cache:
+  directories:
+    - $HOME/.composer/cache/files
