@@ -1,5 +1,6 @@
 dc := USER_ID=$(user) GROUP_ID=$(group) docker-compose
 dr := $(dc) run --rm
+php := $(dr) --no-deps php
 
 .DEFAULT_GOAL := help
 .PHONY: help
