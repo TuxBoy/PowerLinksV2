@@ -17,8 +17,7 @@ dev: vendor/autoload.php ## Lance le serveur de développement
 
 .PHONY: test
 test: vendor/autoload.php ## Execute les tests
-	$(dr) php bin/console doctrine:schema:validate --skip-sync
-	$(dr) php vendor/bin/phpunit
+	$(php) vendor/bin/phpunit
 
 .PHONY: tt
 tt: vendor/autoload.php ## Lance le watcher phpunit
