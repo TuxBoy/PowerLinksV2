@@ -10,7 +10,7 @@
             {% if app.user %}
                 {{ form_row(filterForm.byCurrentUser) }}
             {% endif %}
-            <button type="submit" class="btn btn-primary">Filtrer</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtrer</button>
             <a href="{{ path('root') }}" class="btn btn-danger" title="Rénitialiser le filtre">Annuler</a>
         {{ form_end(filterForm) }}
 

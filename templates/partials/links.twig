@@ -1,6 +1,9 @@
 {% for link in links %}
     {% if link.isPrivate(app.user) == false %}
-        <a href="{{ path('link.seen', {id: link.id}) }}" class="link__url {{ is_granted('ROLE_ADMIN') or (link.canRemove(app.user) and link.seen ? 'seen' : '') }}" title="{{ link.description }}">
+        <a
+                href="{{ path('link.seen', {id: link.id}) }}"
+                class="link__url" title="{{ link.description }}"
+        >
        {% if link.canRemove(app.user) %}
            <toolbox-item id="{{ link.id }}" edit_target="{{ path('link.edit', {link: link.id}) }}"></toolbox-item>
        {% endif %}
@@ -14,7 +17,12 @@
                         <span class="badge badge-success">Nouveau</span>
                     {% endif %}
                 </div>
-                <h3 class="card__title">{{ link.name }}</h3>
+                <h3 class="card__title">
+                    {{ link.name }}
+                    {% if link.private %}
+                        <i class="fas fa-user-shield"></i>
+                    {% endif%}
+                </h3>
                 <div class="card__info">
                     <span>{{ link.createdAt | ago }}</span> -
                     <span>De {{ link.user.username }}</span>

@@ -16,6 +16,7 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
+    <script src="https://kit.fontawesome.com/d2320a4f38.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
 </head>
@@ -29,6 +30,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a href="{{ path('root') }}" title="Voir la liste complète des liens" class="nav-link active">
+                        <i class="fas fa-home"></i>  Accueil
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ path('link.index') }}" title="Voir la liste complète des liens" class="nav-link active">
                         <svg class="bi bi-link" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -64,8 +70,14 @@
                     {% endif %}
                     <li class="nav-item" style="line-height: 2;"><a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a></li>
                 {% else %}
-                    <li class="nav-item"><a href="{{ path('app_login') }}" class="nav-link btn btn-outline-success">Se connecter</a></li>
-                    <li class="nav-item"><a href="{{ path('user.register') }}" class="nav-link">Créer un compte</a></li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_login') }}" class="nav-link btn btn-outline-success">
+                            <i class="fas fa-sign-in-alt"></i> Se connecter
+                        </a>
+                    </li>
+                    <li class="nav-item"><a href="{{ path('user.register') }}" class="nav-link">
+                            <i class="fas fa-user-plus"></i> Créer un compte</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>

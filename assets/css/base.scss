@@ -11,7 +11,14 @@
 }
 
 .btn-primary {
+  $colorButton: var(--blue);
+
   color: #fff;
-  background-color: var(--blue);
-  border-color: var(--blue);
+  background-color: $colorButton;
+  border-color:$colorButton;
+  &:hover {
+    opacity: .5;
+    background-color: $colorButton;
+    border-color: $colorButton;
+  }
 }
