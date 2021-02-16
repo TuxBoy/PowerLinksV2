@@ -24,5 +24,10 @@ tt: vendor/autoload.php ## Lance le watcher phpunit
 	php bin/console cache:clear --env=test
 	php vendor/bin/phpunit-watcher watch --filter="nothing"
 
+.PHONY: format
+format: ## Formate le code
+	./vendor/bin/phpcbf
+	./vendor/bin/php-cs-fixer fix
+
 vendor/autoload.php: composer.lock
 	$(php) composer install

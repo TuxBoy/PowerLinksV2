@@ -27,7 +27,8 @@ final class LinkController extends BaseController
     public function index(LinkRepository $linkRepository, SearchData $data): Response
     {
         return $this->render('link/index.html.twig', [
-        	'links' => $linkRepository->findAllLinks($data)
+        	'links' => $linkRepository->findAllLinks($data),
+	        'menu'  => 'link',
         ]);
     }
 
@@ -125,7 +126,7 @@ final class LinkController extends BaseController
 	public function private(LinkRepository $linkRepository): Response
 	{
 		$linksOfCurrentUser = $linkRepository->findPrivateOfCurrentUser($this->getCurrentUser());
-		return $this->render('link/private.html.twig', ['links' => $linksOfCurrentUser]);
+		return $this->render('link/private.html.twig', ['links' => $linksOfCurrentUser, 'active' => 'private']);
     }
 
 	/**

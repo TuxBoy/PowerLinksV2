@@ -43,7 +43,8 @@ final class PageController extends AbstractController
         return $this->render('page/index.html.twig', [
         	'links'      => $links,
 	        'filterForm' => $filterForm->createView(),
-	        'form'       => $form->createView()
+	        'form'       => $form->createView(),
+	        'menu'       => 'home',
         ]);
     }
 }

@@ -27,7 +27,7 @@ final class UserController extends AbstractController
 		$user = $this->userRepository->find($id);
 		$this->denyAccessUnlessGranted('view', $user, 'Vous ne pouvez pas accéder à cette page');
 
-		return $this->render('user/profile.html.twig', ['user' => $user]);
+		return $this->render('user/profile.html.twig', ['user' => $user, 'menu' => 'profile']);
 	}
 
 }
