@@ -14,6 +14,11 @@
         Tous les liens
     </h1>
     <hr>
-    {% include 'partials/links.twig' %}
+    {% include 'partials/links.twig' with {links: pagination} only %}
+
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
 {% endblock %}

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class PageController extends AbstractController
 {
 
-	private const MAX_LINK_PER_PAGE = 10;
+	private const MAX_LINK_PER_PAGE = 15;
 
 	/**
 	 * @Route("/", name="root")

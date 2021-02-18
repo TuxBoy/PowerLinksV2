@@ -2,11 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Data\SearchData;
 use App\Entity\Link;
 use App\Entity\User;
 use App\Form\Admin\UserType;
 use App\Form\LinkForm;
+use App\Repository\LinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,12 +27,24 @@ final class LinkController extends CrudController
 
 	protected string $templatePath = 'link';
 
+	private LinkRepository $linkRepository;
+
+	public function __construct(
+		EntityManagerInterface $em, PaginatorInterface $paginator, RequestStack $requestStack, LinkRepository $linkRepository
+	) {
+		parent::__construct($em, $paginator, $requestStack);
+		$this->linkRepository = $linkRepository;
+	}
+
 	/**
 	 * @Route("/link", name="link")
+	 *
+	 * @return Response
 	 */
-	public function index(): Response
+	public function index(SearchData $data): Response
 	{
-		return $this->crudIndex();
+		$links = $this->linkRepository->findAllLinks($data);
+		return $this->crudIndex($links);
 	}
 
 

@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Exception;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,10 +25,18 @@ final class LinkController extends BaseController
 	 * @param SearchData $data
 	 * @return Response
 	 */
-    public function index(LinkRepository $linkRepository, SearchData $data): Response
-    {
+    public function index(
+    	LinkRepository $linkRepository, SearchData $data, PaginatorInterface $paginator, Request $request
+    ): Response {
+
+    	$pagination = $paginator->paginate(
+    		$linkRepository->findAllLinks($data),
+			$request->query->getInt('page', 1),
+		    3
+	    );
+
         return $this->render('link/index.html.twig', [
-        	'links' => $linkRepository->findAllLinks($data),
+        	'pagination' => $pagination,
 	        'menu'  => 'link',
         ]);
     }

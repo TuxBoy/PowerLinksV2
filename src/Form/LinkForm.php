@@ -20,7 +20,7 @@ class LinkForm extends AbstractType
     	/** @var $link Link|null */
 		$link = $builder->getData();
         $builder
-            ->add('url', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Url', 'class' => 'urlField']])
+            ->add('url', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Url', 'class' => 'urlField', 'autofocus' => true]])
             ->add('name', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Titre du lien', 'class' => 'title']])
             ->add('image', HiddenType::class, ['label' => false, 'attr' => ['class' => 'image']])
             ->add('description', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'Une courte description', 'class' => 'description']])
