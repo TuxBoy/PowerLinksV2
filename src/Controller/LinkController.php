@@ -32,7 +32,7 @@ final class LinkController extends BaseController
     	$pagination = $paginator->paginate(
     		$linkRepository->findAllLinks($data),
 			$request->query->getInt('page', 1),
-		    3
+		    15
 	    );
 
         return $this->render('link/index.html.twig', [
