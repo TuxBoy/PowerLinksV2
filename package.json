@@ -23,6 +23,7 @@
         "heroku-postbuild": "yarn run build"
     },
     "dependencies": {
+        "bootstrap": "^5.0.0-beta2",
         "choices.js": "^9.0.1"
     }
 }

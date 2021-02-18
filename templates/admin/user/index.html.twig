@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Utilisateurs</h1>
 
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(items) }}
+    </div>
+
     <table class="table">
         <thead>
         <tr>
@@ -39,4 +44,9 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(items) }}
+    </div>
 {% endblock %}
