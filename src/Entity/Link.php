@@ -70,9 +70,15 @@ class Link
      */
     private bool $private = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="views")
+     */
+    private ?Collection $viewsUsers = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->viewsUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -205,17 +211,17 @@ class Link
 	public function canRemove(?User $currentUser): bool
 	{
 		if ($currentUser === null) {
-			return false;
+		    return false;
 		}
 
 		return ($this->getUser()->getId() === $currentUser->getId())
-			|| in_array(User::ROLES['admin'], $currentUser->getRoles());
-     }
+		    || in_array(User::ROLES['admin'], $currentUser->getRoles());
+	}
 
 	public function isPrivate(?User $user): bool
 	{
 		if ($user === null && $this->private === true) {
-			return true;
+		    return true;
 		}
 
 		return $this->private === true && $this->getUser()->getId() !== $user->getId();
@@ -223,8 +229,8 @@ class Link
 
 	public function isNew(): bool
 	{
-    	return $this->created_at >= new \DateTime('-2days');
-    }
+		return $this->created_at >= new \DateTime('-2days');
+	}
 
     public function getPrivate(): bool
     {
@@ -237,4 +243,41 @@ class Link
 
         return $this;
     }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getViewsUsers(): Collection
+    {
+        return $this->viewsUsers;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->viewsUsers->contains($user)) {
+            $this->viewsUsers[] = $user;
+            $user->addView($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->viewsUsers->removeElement($user)) {
+            $user->removeView($this);
+        }
+
+        return $this;
+    }
+
+	/**
+	 * @param int|null $id
+	 * @return Link
+	 */
+	public function setId(?int $id): Link
+	{
+		$this->id = $id;
+		return $this;
+	}
 }

@@ -20,6 +20,8 @@ class SearchData
 
 	public ?string $search = null;
 
+	public ?bool $byView = null;
+
 	public function __construct(Security $security)
 	{
 		$this->user = $security->getUser();
