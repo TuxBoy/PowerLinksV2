@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title 'Accueil' %}
 
 {% block body %}
 
         {{ form_start(filterForm, {attr: {class: 'filter'}}) }}
             {{ form_row(filterForm.orderBy) }}
             {{ form_row(filterForm.search, {attr: {autofocus: 'autofocus'}}) }}
+            {{ form_row(filterForm.byView) }}
             {% if app.user %}
                 {{ form_row(filterForm.byCurrentUser) }}
             {% endif %}

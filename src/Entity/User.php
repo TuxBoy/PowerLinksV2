@@ -51,9 +51,16 @@ class User implements UserInterface
      */
     private ?Collection $links = null;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Link::class, inversedBy="users")
+     * @ORM\JoinTable(name="links_views")
+     */
+    private ?Collection $views = null;
+
     public function __construct()
     {
         $this->links = new ArrayCollection();
+        $this->views = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,11 +125,11 @@ class User implements UserInterface
     }
 
 	public function setUsername(?string $username): self
-    {
-        $this->username = $username;
+	{
+	   $this->username = $username;
 
-        return $this;
-    }
+	   return $this;
+	}
 
 	public function getAvatar(): string
 	{
@@ -181,6 +188,17 @@ class User implements UserInterface
     }
 
 	/**
+	 * Si retourne vrai, l'utilisateur a déjà consulté le lien passé en paramètre.
+	 *
+	 * @param Link $link
+	 * @return bool
+	 */
+	public function hasAlreadyView(Link $link): bool
+	{
+		return $this->views->contains($link) === true;
+    }
+
+	/**
 	 * @param int $id
 	 * @return User
 	 */
@@ -190,4 +208,28 @@ class User implements UserInterface
 
 		return $this;
 	}
+
+    /**
+     * @return Collection|Link[]
+     */
+    public function getViews(): Collection
+    {
+        return $this->views;
+    }
+
+    public function addView(Link $view): self
+    {
+        if (!$this->views->contains($view)) {
+            $this->views[] = $view;
+        }
+
+        return $this;
+    }
+
+    public function removeView(Link $view): self
+    {
+        $this->views->removeElement($view);
+
+        return $this;
+    }
 }

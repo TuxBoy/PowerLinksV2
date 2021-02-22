@@ -1,8 +1,9 @@
 {% for link in links %}
     {% if link.isPrivate(app.user) == false %}
         <a
-                href="{{ path('link.seen', {id: link.id}) }}"
-                class="link__url" title="{{ link.description }}"
+                href="{{ path('link.seen', {link: link.id}) }}"
+                class="link__url {{ app.user.hasAlreadyView(link) ? 'view' : '' }}"
+                title="{{ link.description }}"
         >
        {% if link.canRemove(app.user) %}
            <toolbox-item id="{{ link.id }}" edit_target="{{ path('link.edit', {link: link.id}) }}"></toolbox-item>
@@ -15,6 +16,9 @@
                 <div class="card__badge">
                     {% if link.isNew() %}
                         <span class="badge bg-success">Nouveau</span>
+                    {% endif %}
+                    {% if  app.user.hasAlreadyView(link) %}
+                        <span class="badge bg-danger">Déjà vu</span>
                     {% endif %}
                 </div>
                 <h3 class="card__title">

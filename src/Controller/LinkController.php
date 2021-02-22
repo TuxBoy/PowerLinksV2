@@ -23,10 +23,15 @@ final class LinkController extends BaseController
 	 *
 	 * @param LinkRepository $linkRepository
 	 * @param SearchData $data
+	 * @param PaginatorInterface $paginator
+	 * @param Request $request
 	 * @return Response
 	 */
     public function index(
-    	LinkRepository $linkRepository, SearchData $data, PaginatorInterface $paginator, Request $request
+    	LinkRepository $linkRepository,
+	    SearchData $data,
+	    PaginatorInterface $paginator,
+	    Request $request
     ): Response {
 
     	$pagination = $paginator->paginate(
@@ -111,17 +116,20 @@ final class LinkController extends BaseController
     }
 
 	/**
-	 * @Route("/link/seen/{id}", name="link.seen", methods={"GET"})
+	 * @Route("/link/seen/{link}", name="link.seen", methods={"GET"})
 	 *
-	 * @param int $id
+	 * @param Link $link
 	 * @param LinkRepository $linkRepository
 	 * @param EntityManagerInterface $entityManager
 	 * @return Response
-	 * @throws EntityNotFoundException
 	 */
-	public function seen(int $id, LinkRepository $linkRepository, EntityManagerInterface $entityManager): Response
+	public function seen(Link $link, LinkRepository $linkRepository, EntityManagerInterface $entityManager): Response
 	{
-		$link = $linkRepository->findOrFail($id);
+		// On rajoute le lien dans la liste des liens vus par l'utilisateur
+		$user = $this->getCurrentUser();
+		$user->addView($link);
+		$entityManager->persist($user);
+		$entityManager->flush();
 
 		return $this->redirect($link->getUrl());
     }

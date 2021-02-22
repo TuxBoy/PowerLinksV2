@@ -52,8 +52,16 @@ class LinkRepository extends ServiceEntityRepository
 
 		$query->orderBy('l.created_at', $search->getOrderBy());
 
-		return $query->getQuery()->getResult();
-    }
+		$links = $query->getQuery()->getResult();
+
+		if (null !== $search->byView && $search->byView === true) {
+			$links = array_filter($links, fn (Link $link) => $search->user->hasAlreadyView($link));
+		} elseif (null !== $search->byView && $search->byView === false) {
+			$links = array_filter($links, fn (Link $link) => !$search->user->hasAlreadyView($link));
+		}
+
+		return $links;
+	}
 
 	public function findOrFail(int $id): Link
 	{

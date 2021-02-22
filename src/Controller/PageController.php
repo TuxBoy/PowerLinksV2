@@ -7,12 +7,11 @@ use App\Entity\Link;
 use App\Form\LinkForm;
 use App\Form\SearchForm;
 use App\Repository\LinkRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class PageController extends AbstractController
+final class PageController extends BaseController
 {
 
 	private const MAX_LINK_PER_PAGE = 15;
@@ -27,14 +26,6 @@ final class PageController extends AbstractController
 	 */
     public function index(Request $request, LinkRepository $linkRepository, SearchData $data): Response
     {
-    	// Todo Voir pour passer cette logique dans un ParamConverter (ou autre)
-    	if ($request->query->has('orderBy') === false) {
-    		$request->query->set('orderBy', 'desc');
-	    }
-
-    	if ($request->query->has('byCurrentUser') === false) {
-		    $request->query->set('byCurrentUser', 'all');
-	    }
     	$filterForm = $this->createForm(SearchForm::class, $data);
     	$filterForm->handleRequest($request);
 
