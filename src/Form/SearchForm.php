@@ -21,7 +21,7 @@ class SearchForm extends AbstractType
 		$data = $builder->getData();
 		$builder
 			->add('orderBy',  ChoiceType::class, [
-				'choices' => ['Plus récents' => 'desc', 'Moins résents' => 'asc'],
+				'choices' => ['Plus récents' => 'desc', 'Moins récents' => 'asc'],
 				'label'   => false,
 				'empty_data' => 'desc',
 				'attr'    => ['class' => 'form-select'],
