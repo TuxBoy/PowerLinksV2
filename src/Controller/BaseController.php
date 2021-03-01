@@ -12,9 +12,9 @@ abstract class BaseController extends AbstractController
 {
 
 	/**
-	 * @return User|UserInterface
+	 * @return User|UserInterface|null
 	 */
-	protected function getCurrentUser(): User
+	protected function getCurrentUser(): ?User
 	{
 		return $this->getUser();
 	}
