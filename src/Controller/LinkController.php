@@ -125,11 +125,13 @@ final class LinkController extends BaseController
 	 */
 	public function seen(Link $link, LinkRepository $linkRepository, EntityManagerInterface $entityManager): Response
 	{
-		// On rajoute le lien dans la liste des liens vus par l'utilisateur
+		// On rajoute le lien dans la liste des liens vus par l'utilisateur si celui-ci est connecté.
 		$user = $this->getCurrentUser();
-		$user->addView($link);
-		$entityManager->persist($user);
-		$entityManager->flush();
+		if ($user !== null) {
+			$user->addView($link);
+			$entityManager->persist($user);
+			$entityManager->flush();
+		}
 
 		return $this->redirect($link->getUrl());
     }
