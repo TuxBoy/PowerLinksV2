@@ -24,13 +24,17 @@ final class PageController extends BaseController
 	 * @param SearchData $data
 	 * @return Response
 	 */
-    public function index(Request $request, LinkRepository $linkRepository, SearchData $data): Response
-    {
+    public function index(
+    	Request $request,
+	    LinkRepository $linkRepository,
+	    SearchData $data
+    ): Response {
     	$filterForm = $this->createForm(SearchForm::class, $data);
     	$filterForm->handleRequest($request);
 
 	    $form  = $this->createForm(LinkForm::class, new Link);
     	$links = $linkRepository->findAllLinks($data, self::MAX_LINK_PER_PAGE);
+
         return $this->render('page/index.html.twig', [
         	'links'      => $links,
 	        'filterForm' => $filterForm->createView(),

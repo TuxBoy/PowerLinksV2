@@ -4,6 +4,7 @@ import Link from "./Link";
 import MetaLink from "./elements/MetaLink";
 import Toolbox from "./elements/Toolbox";
 import { TimeAgo } from "./elements/TimeAgo.js";
+import Notification from "./elements/Notification.js";
 import Choices from "choices.js";
 
 if (document.querySelector('#addLink') !== null) {
@@ -24,6 +25,10 @@ const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-t
 const dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
     return new bootstrap.Dropdown(dropdownToggleEl)
 })
+
+const notification = new Notification()
+const myDropdown = document.getElementById('notificationDropdown')
+myDropdown.addEventListener('show.bs.dropdown', notification.onClickOpenNotification)
 
 customElements.define('meta-link', MetaLink)
 customElements.define('toolbox-item', Toolbox)

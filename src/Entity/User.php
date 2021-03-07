@@ -57,10 +57,16 @@ class User implements UserInterface
      */
     private ?Collection $views = null;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     */
+    private ?Collection $notifications = null;
+
     public function __construct()
     {
         $this->links = new ArrayCollection();
         $this->views = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,19 +131,19 @@ class User implements UserInterface
     }
 
 	public function setUsername(?string $username): self
-	{
-	   $this->username = $username;
+    {
+       $this->username = $username;
 
-	   return $this;
-	}
+       return $this;
+    }
 
 	public function getAvatar(): string
-	{
-		$default = "https://www.somewhere.com/homestar.jpg";
-		$size    = 40;
+    {
+        $default = "https://www.somewhere.com/homestar.jpg";
+        $size    = 40;
 
-		return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) ) . "?s=" . $size;
-	}
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) ) . "?s=" . $size;
+    }
 
     /**
      * @see UserInterface
@@ -194,8 +200,8 @@ class User implements UserInterface
 	 * @return bool
 	 */
 	public function hasAlreadyView(Link $link): bool
-	{
-		return $this->views->contains($link) === true;
+    {
+        return $this->views->contains($link) === true;
     }
 
 	/**
@@ -203,11 +209,11 @@ class User implements UserInterface
 	 * @return User
 	 */
 	public function setId(int $id): User
-	{
-		$this->id = $id;
+    {
+        $this->id = $id;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * @return Collection|Link[]
@@ -229,6 +235,36 @@ class User implements UserInterface
     public function removeView(Link $view): self
     {
         $this->views->removeElement($view);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
 
         return $this;
     }

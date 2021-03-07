@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\Link;
+use App\Event\LinkCreatedEvent;
 use App\Form\LinkForm;
 use App\Repository\LinkRepository;
 use DateTime;
@@ -12,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,11 +53,14 @@ final class LinkController extends BaseController
 	 *
 	 * @param Request $request
 	 * @param EntityManagerInterface $entityManager
+	 * @param EventDispatcherInterface $eventDispatcher
 	 * @return Response
-	 * @throws Exception
 	 */
-	public function save(Request $request, EntityManagerInterface $entityManager): Response
-	{
+	public function save(
+		Request $request,
+		EntityManagerInterface $entityManager,
+	    EventDispatcherInterface $eventDispatcher
+	): Response {
 		$form = $this->createForm(LinkForm::class, new Link);
 		$form->handleRequest($request);
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -70,8 +75,12 @@ final class LinkController extends BaseController
 			$entityManager->persist($link);
 			$entityManager->flush();
 
+			$eventDispatcher->dispatch(new LinkCreatedEvent($link));
+
 			return $this->redirectToHome('Le lien a bien été ajouté.');
 		}
+
+		return $this->redirectToHome("Le lien n'est pas valide.", 'error');
     }
 
 	/**
@@ -82,8 +91,11 @@ final class LinkController extends BaseController
 	 * @param EntityManagerInterface $entityManager
 	 * @return Response
 	 */
-	public function edit(Link $link, Request $request, EntityManagerInterface $entityManager): Response
-	{
+	public function edit(
+		Link $link,
+		Request $request,
+		EntityManagerInterface $entityManager
+	): Response {
 		$this->denyAccessUnlessGranted('edit', $link);
 
 		$form = $this->createForm(LinkForm::class, $link);
@@ -152,12 +164,13 @@ final class LinkController extends BaseController
 	 * Redirige vers la home page avec un message flash si celui ci est défini.
 	 *
 	 * @param string|null $successMessage
+	 * @param string $type
 	 * @return Response
 	 */
-    private function redirectToHome(string $successMessage = null): Response
+    private function redirectToHome(string $successMessage = null, string $type = 'success'): Response
     {
     	if (null !== $successMessage) {
-		    $this->addFlash('success', $successMessage);
+		    $this->addFlash($type, $successMessage);
 	    }
 	    return $this->redirectToRoute('root');
     }

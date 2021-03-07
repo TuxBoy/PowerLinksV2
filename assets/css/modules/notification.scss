@@ -1,0 +1,9 @@
+.notification .dropdown-toggle::after {
+  display: none;
+  content: '';
+}
+
+.notification sup {
+  margin-left: -6px;
+  font-size: .7em;
+}

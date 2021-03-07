@@ -35,4 +35,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
+	/**
+	 * Récupère tous les utilisateurs exepté celui passé en paramètre
+	 *
+	 * @param User $user
+	 * @return User[]
+	 */
+	public function findAllUser(User $user): array
+	{
+		return $this->createQueryBuilder('u')
+			->select('u')
+			->where('u.id <> :id')
+			->setParameter('id', $user->getId())
+			->getQuery()
+			->getResult();
+    }
+
 }

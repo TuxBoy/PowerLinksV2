@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mes notifications' %}
+
+{% block body %}
+
+    <h1>Mes notifications</h1>
+
+    {% for notification in notifications %}
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ notification.message }}</li>
+            </ul>
+        </div>
+    {% endfor %}
+
+{% endblock %}
