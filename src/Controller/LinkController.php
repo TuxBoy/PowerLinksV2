@@ -11,7 +11,6 @@ use App\Repository\LinkRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityNotFoundException;
-use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,7 +93,8 @@ final class LinkController extends BaseController
 	public function edit(
 		Link $link,
 		Request $request,
-		EntityManagerInterface $entityManager
+		EntityManagerInterface $entityManager,
+		EventDispatcherInterface $eventDispatcher
 	): Response {
 		$this->denyAccessUnlessGranted('edit', $link);
 
@@ -104,6 +104,8 @@ final class LinkController extends BaseController
 			$link->setUpdatedAt(new DateTime());
 			$entityManager->persist($link);
 			$entityManager->flush();
+
+			$eventDispatcher->dispatch(new LinkCreatedEvent($link));
 
 			return $this->redirectToHome('Votre lien a bien été edité.');
 		}
