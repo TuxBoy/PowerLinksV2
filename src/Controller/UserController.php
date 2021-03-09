@@ -24,7 +24,7 @@ final class UserController extends BaseController
 	}
 
 	/**
-	 * @Route("/{id}", methods={"GET"}, name="profile")
+	 * @Route("/profil/{id}", methods={"GET"}, name="profile")
 	 *
 	 * @param int $id
 	 * @return Response

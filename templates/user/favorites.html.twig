@@ -6,6 +6,10 @@
 
     <h1>Mes favoris</h1>
 
+    {% if links.count < 1 %}
+        <p class="alert alert-danger">Aucun favoris n'a été ajouté pour le moment.</p>
+    {% endif %}
+
     {% include 'partials/links.twig' with {links: links} only %}
 
 {% endblock %}
