@@ -159,7 +159,7 @@ final class LinkController extends BaseController
 	public function private(LinkRepository $linkRepository): Response
 	{
 		$linksOfCurrentUser = $linkRepository->findPrivateOfCurrentUser($this->getCurrentUser());
-		return $this->render('link/private.html.twig', ['links' => $linksOfCurrentUser, 'active' => 'private']);
+		return $this->render('link/private.html.twig', ['links' => $linksOfCurrentUser, 'menu' => 'private']);
     }
 
 	/**
