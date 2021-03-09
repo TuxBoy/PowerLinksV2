@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class BaseController extends AbstractController
@@ -16,6 +17,12 @@ abstract class BaseController extends AbstractController
 	 */
 	protected function getCurrentUser(): ?User
 	{
-		return $this->getUser();
+		$user = $this->getUser();
+
+		if ($user === null) {
+			throw new UnauthorizedHttpException("Il faut être conecter pour avoir accès à ce service");
+		}
+
+		return $user;
 	}
 }

@@ -138,3 +138,10 @@
 .link__url.view {
   opacity: .6;
 }
+
+.favorite__link {
+  transition-duration: .3s;
+  &:hover, &.active {
+    color: #FF0000;
+  }
+}

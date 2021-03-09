@@ -1,0 +1,103 @@
+
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('root') }}">Power links</a>
+        <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a href="{{ path('root') }}" title="Voir la liste complète des liens" class="nav-link {{ menu_is_active('home') }}">
+                        <i class="fas fa-home"></i>  Accueil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('link.index') }}" title="Voir la liste complète des liens" class="nav-link {{ menu_is_active('link') }}">
+                        <svg class="bi bi-link" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.354 5.5H4a3 3 0 000 6h3a3 3 0 002.83-4H9c-.086 0-.17.01-.25.031A2 2 0 017 10.5H4a2 2 0 110-4h1.535c.218-.376.495-.714.82-1z"/>
+                            <path d="M6.764 6.5H7c.364 0 .706.097 1 .268A1.99 1.99 0 019 6.5h.236A3.004 3.004 0 008 5.67a3 3 0 00-1.236.83z"/>
+                            <path d="M9 5.5a3 3 0 00-2.83 4h1.098A2 2 0 019 6.5h3a2 2 0 110 4h-1.535a4.02 4.02 0 01-.82 1H12a3 3 0 100-6H9z"/>
+                            <path d="M8 11.33a3.01 3.01 0 001.236-.83H9a1.99 1.99 0 01-1-.268 1.99 1.99 0 01-1 .268h-.236c.332.371.756.66 1.236.83z"/>
+                        </svg>
+                        Liens
+                    </a>
+                </li>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a href="{{ path('link.private') }}" title="Voir la liste complète des liens" class="nav-link {{ menu_is_active('private') }}">
+                            <i class="fas fa-user-shield"></i> Mes liens privés
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if app.user %}
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="profileMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ app.user.avatar }}" alt="{{ app.user.username }}" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="profileMenu">
+                            <li><a class="dropdown-item" href="{{ path('user.profile', {id: app.user.id}) }}"><i class="fas fa-user"></i> Mon profil</a></li>
+                            <li><a class="dropdown-item" href="{{ path('user.links') }}">
+                                    <svg class="bi bi-link" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.354 5.5H4a3 3 0 000 6h3a3 3 0 002.83-4H9c-.086 0-.17.01-.25.031A2 2 0 017 10.5H4a2 2 0 110-4h1.535c.218-.376.495-.714.82-1z"/>
+                                        <path d="M6.764 6.5H7c.364 0 .706.097 1 .268A1.99 1.99 0 019 6.5h.236A3.004 3.004 0 008 5.67a3 3 0 00-1.236.83z"/>
+                                        <path d="M9 5.5a3 3 0 00-2.83 4h1.098A2 2 0 019 6.5h3a2 2 0 110 4h-1.535a4.02 4.02 0 01-.82 1H12a3 3 0 100-6H9z"/>
+                                        <path d="M8 11.33a3.01 3.01 0 001.236-.83H9a1.99 1.99 0 01-1-.268 1.99 1.99 0 01-1 .268h-.236c.332.371.756.66 1.236.83z"/>
+                                    </svg>
+                                    Mes liens
+                                </a></li>
+                            <li><a class="dropdown-item" href="{{ path('user.favorites') }}"><i class="far fa-star"></i> Mes favoris</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <notification-item>
+                        <li class="notification nav-item dropdown">
+                            <a href=""
+                               class="nav-link dropdown-toggle"
+                               data-total="{{ notification.notificationCount }}"
+                               data-update="{{ path('notification_update', {user: app.user.id}) }}"
+                               id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            >
+                                <i class="fas fa-bell notification__icon"></i>
+                                {% if notification.notificationCount > 0 %}
+                                    <sup class="notification__count">
+                                        <span class="badge bg-danger">{{ notification.notificationCount }}</span>
+                                    </sup>
+                                {% endif %}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="notificationDropdown">
+                                {% for notification in notification.getNotViewNotifications %}
+                                    <li class="notification__link">
+                                        <a class="dropdown-item" href="#">
+                                            <strong>{{ notification.message }}</strong>
+                                            <p class="fs-6">{{ notification.createdAt | ago }}</p>
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                {% endfor %}
+                                <li><a href="{{ path('notification_view', {user: app.user.id}) }}" class="dropdown-item">Toutes mes notifications</a></li>
+                            </ul>
+                        </li>
+                    </notification-item>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item" style="line-height: 2;"><a href="{{ path('admin_dashboard') }}" class="nav-link"><strong>Admin</strong></a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="nav-item">
+                        <a href="{{ path('app_login') }}" class="nav-link btn btn-outline-success">
+                            <i class="fas fa-sign-in-alt"></i> Se connecter
+                        </a>
+                    </li>
+                    <li class="nav-item"><a href="{{ path('user.register') }}" class="nav-link">
+                            <i class="fas fa-user-plus"></i> Créer un compte</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

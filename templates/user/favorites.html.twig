@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Mes Favoris' %}
+
+{% block body %}
+
+    <h1>Mes favoris</h1>
+
+    {% include 'partials/links.twig' with {links: links} only %}
+
+{% endblock %}

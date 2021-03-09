@@ -62,11 +62,18 @@ class User implements UserInterface
      */
     private ?Collection $notifications = null;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Link::class)
+     * @ORM\JoinTable(name="favorites_link")
+     */
+    private ?Collection $favoritesLink = null;
+
     public function __construct()
     {
         $this->links = new ArrayCollection();
         $this->views = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->favoritesLink = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -268,4 +275,34 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Link[]
+     */
+    public function getFavoritesLink(): Collection
+    {
+        return $this->favoritesLink;
+    }
+
+    public function addFavoritesLink(Link $favoritesLink): self
+    {
+        if (!$this->favoritesLink->contains($favoritesLink)) {
+            $this->favoritesLink[] = $favoritesLink;
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritesLink(Link $favoritesLink): self
+    {
+        $this->favoritesLink->removeElement($favoritesLink);
+
+        return $this;
+    }
+
+    public function hasFavorite(Link $link): bool
+    {
+    	return $this->favoritesLink->contains($link) === true;
+    }
+
 }

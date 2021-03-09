@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 final class LinkController extends BaseController
 {
 	/**
-	 * @Route("/link", name="link.index")
+	 * @Route("/tous-les-liens", name="link.index")
 	 *
 	 * @param LinkRepository $linkRepository
 	 * @param SearchData $data

@@ -30,6 +30,15 @@
                 <div class="card__info">
                     <span>{{ link.createdAt | ago }}</span> -
                     <span>De {{ link.user.username }}</span>
+                    {% if is_granted('ROLE_USER') %}
+                        -
+                        <favorite-button
+                                route-add="{{ path('api_user_favorite_add', {link: link.id}) }}"
+                                route-delete="{{ path('api_user_favorite_delete', {link: link.id}) }}"
+                        >
+                            <span class="favorite__link {{ app.user.Favorite(link) ? 'active': '' }}"><i class="far fa-star"></i></span>
+                        </favorite-button>
+                    {% endif %}
                 </div>
             </div>
             <div class="card__tags">
