@@ -111,6 +111,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.1"
     },
+    "ifsnop/mysqldump-php": {
+        "version": "v2.9"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
