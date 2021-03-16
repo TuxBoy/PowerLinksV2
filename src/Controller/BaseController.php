@@ -17,12 +17,6 @@ abstract class BaseController extends AbstractController
 	 */
 	protected function getCurrentUser(): ?User
 	{
-		$user = $this->getUser();
-
-		if ($user === null) {
-			throw new UnauthorizedHttpException("Il faut être conecter pour avoir accès à ce service");
-		}
-
-		return $user;
+		return $this->getUser();
 	}
 }
