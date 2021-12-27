@@ -38,7 +38,7 @@ abstract class CrudController extends AbstractController
 
 	protected function crudIndex(?array $items = null): Response
 	{
-		$items = $items ?? $this->getDoctrine()->getRepository($this->entity)->findAll();
+		$items = $items ?? $this->em->getRepository($this->entity)->findAll();
 
 		$page = $this->requestStack->getCurrentRequest()->query->getInt('page', 1);
 		$pagination = $this->paginator->paginate($items, $page, static::MAX_PER_PAGE);
