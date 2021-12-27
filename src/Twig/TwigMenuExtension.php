@@ -12,7 +12,10 @@ class TwigMenuExtension extends AbstractExtension
 
 	private const ACTIVE_CLASS = 'active';
 
-	public function getFunctions()
+	/**
+	 * @return array<array-key, TwigFunction>
+	 */
+	public function getFunctions(): array
 	{
 		return [
 			new TwigFunction('menu_is_active', [$this, 'menuIsActive'], ['needs_context' => true]),
