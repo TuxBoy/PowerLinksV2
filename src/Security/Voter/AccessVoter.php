@@ -15,7 +15,7 @@ abstract class AccessVoter extends Voter
 	protected const EDIT = 'edit';
 	protected const VIEW = 'view';
 
-	protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+	protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
 	{
 		$user = $token->getUser();
 
