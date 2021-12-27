@@ -11,20 +11,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/', name: 'root')]
 final class PageController extends BaseController
 {
 
 	private const MAX_LINK_PER_PAGE = 15;
 
-	/**
-	 * @Route("/", name="root")
-	 *
-	 * @param Request $request
-	 * @param LinkRepository $linkRepository
-	 * @param SearchData $data
-	 * @return Response
-	 */
-    public function index(
+    public function __invoke(
     	Request $request,
 	    LinkRepository $linkRepository,
 	    SearchData $data

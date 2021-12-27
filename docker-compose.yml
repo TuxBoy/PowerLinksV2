@@ -1,21 +1,14 @@
 version: '3.3'
 services:
-  web:
-    image: nginx:alpine
-    restart: unless-stopped
-    ports:
-      - 8000:80
-    volumes:
-      - .:/var/www:delegated
-      - ./site.conf:/etc/nginx/conf.d/default.conf
-    links:
-      - php
   php:
     user: '${USER_ID}:${GROUP_ID}'
     restart: unless-stopped
-    image: grafikart/php:1.0.3
+    container_name: powerlinks_php
+    build: tools/docker/php
     volumes:
-      - .:/var/www:delegated
+      - .:/var/www/html
+    ports:
+      - "9000:8000"
     depends_on:
       - db
     environment:
@@ -31,6 +24,9 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT__USER: root
       MYSQL_ROOT__DB: grafikart
+    volumes:
+      - db-data:/var/lib/mysql/data:rw  
+  
   # Dev tools
   adminer:
     image: adminer
@@ -56,6 +52,5 @@ services:
  #    - 3000:3000
 volumes:
   db-data:
-    driver: local
   search-data:
     driver: local
