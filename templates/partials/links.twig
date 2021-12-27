@@ -4,6 +4,7 @@
                 href="{{ path('link.seen', {link: link.id}) }}"
                 class="link__url {{ app.user and app.user.hasAlreadyView(link) ? 'view' : '' }}"
                 title="{{ link.description }}"
+                target="_blank"
         >
        {% if link.canRemove(app.user) %}
            <toolbox-item id="{{ link.id }}" edit_target="{{ path('link.edit', {link: link.id}) }}"></toolbox-item>

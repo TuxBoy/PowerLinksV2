@@ -5,9 +5,12 @@
 {% block body %}
     <h1>Gestion des liens</h1>
 
-    {# display navigation #}
-    <div class="navigation">
-        {{ knp_pagination_render(items) }}
+    <div class="actions">
+        {# display navigation #}
+        <div class="navigation">
+            {{ knp_pagination_render(items) }}
+            <a href="{{ path('link_create') }}" class="btn btn-primary">Ajouter un lien</a>
+        </div>
     </div>
 
     <table class="table">

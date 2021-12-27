@@ -15,9 +15,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin", name="admin_")
- */
 final class LinkController extends CrudController
 {
 
@@ -47,6 +44,27 @@ final class LinkController extends CrudController
 		return $this->crudIndex($links);
 	}
 
+	/**
+	 * @Route("/link/create", name="link_create", methods={"GET", "POST"})
+	 *
+	 * @return Response
+	 */
+	public function create(Request $request): Response
+	{
+		$link = new Link();
+		$form = $this->createForm(LinkForm::class, $link);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$this->em->persist($link);
+			$this->em->flush();
+
+			$this->addFlash('success', 'Le lien a bien été ajouté.');
+			return $this->redirectToRoute('link');
+		}
+
+		return $this->render('admin/link/create.html.twig', ['form' => $form->createView()]);
+	}
+
 
 	/**
 	 * @Route("/link/edit/{link}", name="link_edit")
@@ -55,7 +73,7 @@ final class LinkController extends CrudController
 	 * @param Request $request
 	 * @return Response
 	 */
-	public function edit(link $link, Request $request): Response
+	public function edit(Link $link, Request $request): Response
 	{
 		$form = $this->createForm(LinkForm::class, $link);
 		$form->handleRequest($request);
@@ -65,13 +83,13 @@ final class LinkController extends CrudController
 			$this->em->flush();
 
 			$this->addFlash('success', "le lien a bien été modifié");
-			return $this->redirectToRoute('admin_user');
+			return $this->redirectToRoute('admin_link');
 		}
 		return $this->render('admin/link/edit.html.twig', ['link' => $link, 'form' => $form->createView()]);
 	}
 
 	/**
-	 * @Route("/user/delete/{link}", name="link_delete", methods={"DELETE"})
+	 * @Route("/link/delete/{link}", name="link_delete", methods={"DELETE"})
 	 *
 	 * @param Link $link
 	 * @return Response

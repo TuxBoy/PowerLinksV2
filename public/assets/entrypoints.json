@@ -2,23 +2,23 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/assets/runtime.5b7a9943.js",
-        "/assets/0.261ade66.js",
-        "/assets/1.6856b224.js",
-        "/assets/app.9c7274ab.js"
+        "http://localhost:8080/assets/runtime.js",
+        "http://localhost:8080/assets/vendors~admin~app.js",
+        "http://localhost:8080/assets/vendors~app.js",
+        "http://localhost:8080/assets/app.js"
       ],
       "css": [
-        "/assets/app.e1c572fd.css"
+        "http://localhost:8080/assets/app.css"
       ]
     },
     "admin": {
       "js": [
-        "/assets/runtime.5b7a9943.js",
-        "/assets/0.261ade66.js",
-        "/assets/admin.826b3e64.js"
+        "http://localhost:8080/assets/runtime.js",
+        "http://localhost:8080/assets/vendors~admin~app.js",
+        "http://localhost:8080/assets/admin.js"
       ],
       "css": [
-        "/assets/admin.04ade7b3.css"
+        "http://localhost:8080/assets/admin.css"
       ]
     }
   }

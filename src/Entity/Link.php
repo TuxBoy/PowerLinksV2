@@ -38,11 +38,6 @@ class Link
     private ?string $description = null;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": 0})
-     */
-    private bool $seen;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private ?DateTimeInterface $created_at = null;
@@ -120,18 +115,6 @@ class Link
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSeen(): ?bool
-    {
-        return $this->seen;
-    }
-
-    public function setSeen(bool $seen): self
-    {
-        $this->seen = $seen;
 
         return $this;
     }
