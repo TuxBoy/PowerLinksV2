@@ -12,19 +12,31 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+    Domain\:
+        resource: '../src/Domain'
+        exclude:
+            - '../src/Domain/Entity/'
+                
+    Infrastructure\:
+        resource: '../src/Infrastructure'
+        exclude:
+            - '../src/Infrastructure/Symfony/Kernel.php'
+            - '../src/Infrastructure/Doctrine/Migrations/'
+
+    UserInterface\:
+        resource: '../src/UserInterface'
+        exclude:
+            - '../src/UserInterface/Dto/'
+
+    UserInterface\Dto\SearchData: ~
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    UserInterface\Controller\:
+        resource: '../src/UserInterface/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Infrastructure\Service\Dump\MysqlDumpService:
+    Infrastructure\Service\Dump\MysqlDumpService:
         arguments:
             $dsn: '%env(HEROKU_DNS)%'
             $username: '%env(HEROKU_USERNAME)%'

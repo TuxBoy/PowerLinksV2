@@ -1,9 +1,9 @@
 {
-  "assets/admin.css": "http://localhost:8080/assets/admin.css",
-  "assets/admin.js": "http://localhost:8080/assets/admin.js",
-  "assets/app.css": "http://localhost:8080/assets/app.css",
-  "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/runtime.js": "http://localhost:8080/assets/runtime.js",
-  "assets/vendors~admin~app.js": "http://localhost:8080/assets/vendors~admin~app.js",
-  "assets/vendors~app.js": "http://localhost:8080/assets/vendors~app.js"
+  "assets/admin.css": "/assets/admin.css",
+  "assets/admin.js": "/assets/admin.js",
+  "assets/app.css": "/assets/app.css",
+  "assets/app.js": "/assets/app.js",
+  "assets/runtime.js": "/assets/runtime.js",
+  "assets/vendors~admin~app.js": "/assets/vendors~admin~app.js",
+  "assets/vendors~app.js": "/assets/vendors~app.js"
 }

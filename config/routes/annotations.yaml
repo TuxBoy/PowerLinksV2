@@ -1,13 +1,13 @@
 controllers:
-    resource: ../../src/Controller/
+    resource: ../../src/UserInterface/Controller/
     type: annotation
 
 admin_controllers:
-    resource: ../../src/Controller/Admin/
+    resource: ../../src/UserInterface/Controller/Admin/
     name_prefix: admin_
     prefix: /admin
     type: annotation
 
 kernel:
-    resource: ../../src/Kernel.php
+    resource: ../../src/Infrastructure/Symfony/Kernel.php
     type: annotation

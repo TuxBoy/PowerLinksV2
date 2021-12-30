@@ -4,28 +4,36 @@ declare(strict_types=1);
 
 namespace App\Tests\Form\DataTransformer;
 
-use App\Entity\Tag;
-use App\Form\DataTransformer\TagsTransformer;
-use App\Repository\TagRepository;
+use Infrastructure\Doctrine\Entity\Tag;
+use Infrastructure\Doctrine\Repository\TagRepository;
 use PHPUnit\Framework\TestCase;
- use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
+use UserInterface\Form\DataTransformer\TagsTransformer;
 
-class TagsTransformerTest extends TestCase
+final class TagsTransformerTest extends TestCase
 {
+	private MockObject|TagRepository|null $repository = null;
+
+	protected function setUp(): void
+	{
+		parent::setUp();
+
+		$this->repository = $this->createMock(TagRepository::class);
+	}
+
+	protected function tearDown(): void
+	{
+		$this->repository = null;
+
+		parent::tearDown();
+	}
 
 	/**
 	 * @covers \App\Form\DataTransformer\TagsTransformer::reverseTransform
 	 */
 	public function testWithEmptyString(): void
 	{
-		/** @var $repository MockObject|TagRepository */
-		$repository = $this
-			->getMockBuilder(TagRepository::class)
-			->disableOriginalConstructor()
-			->setMethods(['findBy'])
-			->getMock();
-
-		$transformer = new TagsTransformer($repository);
+		$transformer = new TagsTransformer($this->repository);
 
 		$this->assertEmpty($transformer->reverseTransform(''));
 		$this->assertEmpty($transformer->reverseTransform(null));
@@ -36,15 +44,9 @@ class TagsTransformerTest extends TestCase
 	 */
 	public function testWithOneTag(): void
 	{
-		/** @var $repository MockObject|TagRepository */
-		$repository = $this
-			->getMockBuilder(TagRepository::class)
-			->disableOriginalConstructor()
-			->setMethods(['findBy'])
-			->getMock();
+		$this->repository->expects($this->once())->method('findBy')->willReturn([]);
 
-		$repository->expects($this->once())->method('findBy')->willReturn([]);
-		$transformer = new TagsTransformer($repository);
+		$transformer = new TagsTransformer($this->repository);
 		$tags        = $transformer->reverseTransform('foo');
 		$tag         = (new Tag())->setName('foo');
 
@@ -57,16 +59,10 @@ class TagsTransformerTest extends TestCase
 	 */
 	public function testWithTagAlreadyExist(): void
 	{
-		/** @var $repository MockObject|TagRepository */
-		$repository = $this
-			->getMockBuilder(TagRepository::class)
-			->disableOriginalConstructor()
-			->setMethods(['findBy'])
-			->getMock();
-		$tag         = (new Tag())->setName('foo');
+		$tag = (new Tag())->setName('foo');
 
-		$repository->expects($this->once())->method('findBy')->willReturn([$tag]);
-		$transformer = new TagsTransformer($repository);
+		$this->repository->expects($this->once())->method('findBy')->willReturn([$tag]);
+		$transformer = new TagsTransformer($this->repository);
 		$tags        = $transformer->reverseTransform('foo');
 
 		$this->assertNotEmpty($tags);
@@ -78,17 +74,11 @@ class TagsTransformerTest extends TestCase
 	 */
 	public function testWithTagSensibilityCase(): void
 	{
-		/** @var $repository MockObject|TagRepository */
-		$repository = $this
-			->getMockBuilder(TagRepository::class)
-			->disableOriginalConstructor()
-			->setMethods(['findBy'])
-			->getMock();
 		$tag  = (new Tag())->setName('foo');
 		$tag2 = (new Tag())->setName('bar');
 
-		$repository->expects($this->once())->method('findBy')->willReturn([$tag, $tag2]);
-		$transformer = new TagsTransformer($repository);
+		$this->repository->expects($this->once())->method('findBy')->willReturn([$tag, $tag2]);
+		$transformer = new TagsTransformer($this->repository);
 		$tags        = $transformer->reverseTransform('Foo, Bar, test, foo');
 
 		$this->assertNotEmpty($tags);
@@ -100,16 +90,10 @@ class TagsTransformerTest extends TestCase
 	 */
 	public function testAddMultipleTags(): void
 	{
-		/** @var $repository MockObject|TagRepository */
-		$repository = $this
-			->getMockBuilder(TagRepository::class)
-			->disableOriginalConstructor()
-			->setMethods(['findBy'])
-			->getMock();
 		$tag = (new Tag())->setName('foo');
 
-		$repository->expects($this->once())->method('findBy')->willReturn([$tag]);
-		$transformer = new TagsTransformer($repository);
+		$this->repository->expects($this->once())->method('findBy')->willReturn([$tag]);
+		$transformer = new TagsTransformer($this->repository);
 		$tags        = $transformer->reverseTransform('foo,bar, test ');
 
 		$this->assertNotEmpty($tags);
