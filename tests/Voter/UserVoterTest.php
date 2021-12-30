@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Voter;
 
-use App\Entity\User;
-use App\Security\Voter\UserVoter;
+use Infrastructure\Doctrine\Entity\User;
+use Infrastructure\Symfony\Security\Voter\UserVoter;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

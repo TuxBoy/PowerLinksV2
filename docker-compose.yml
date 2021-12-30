@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   php:
-    user: '${USER_ID}:${GROUP_ID}'
+    #user: '${USER_ID}:${GROUP_ID}'
     restart: unless-stopped
     container_name: powerlinks_php
     build: tools/docker/php

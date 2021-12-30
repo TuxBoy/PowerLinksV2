@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Twig;
 
-use App\Twig\TwigTimeExtension;
 use PHPUnit\Framework\TestCase;
+use UserInterface\Twig\TwigTimeExtension;
 
 final class TwigTimeExtensionTest extends TestCase
 {

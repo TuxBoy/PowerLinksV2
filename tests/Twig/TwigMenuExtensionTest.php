@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Twig;
 
-use App\Twig\TwigMenuExtension;
 use PHPUnit\Framework\TestCase;
+use UserInterface\Twig\TwigMenuExtension;
 
 final class TwigMenuExtensionTest extends TestCase
 {

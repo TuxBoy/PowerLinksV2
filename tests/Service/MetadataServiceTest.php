@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Service;
 
-use App\Service\MetadataService;
+use Infrastructure\Symfony\Service\Metadata\MetadataService;
 use PHPUnit\Framework\TestCase;
 
 final class MetadataServiceTest extends TestCase
